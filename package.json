@@ -1,0 +1,26 @@
+{
+  "name": "outside",
+  "version": "3.0.1",
+  "description": "Boilerplate for WDD 330 SleepOutside project",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview",
+    "lint": "eslint *.js src/**/*.js",
+    "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{html,json,js,ts,css}\"",
+    "test": "vitest"
+  },
+  "author": "Shane Thompson",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.2",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "vite": "^6.3.3",
+    "vitest": "^3.1.2"
+  }
+}
