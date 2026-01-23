@@ -25,4 +25,29 @@ function cartItemTemplate(item) {
   return newItem;
 }
 
+function getTotal() {
+  const cartItems = getLocalStorage('so-cart');
+  console.log(cartItems);
+  let total = 0;
+  cartItems.forEach(item => {
+    console.log(item.FinalPrice)
+    total += item.FinalPrice;
+  });
+
+  console.log(total);
+  return total;
+}
+
+function renderTotal() {
+  const total = getTotal();
+  const htmlTotal = document.querySelector('.cart-total');
+  if (total == 0) {
+    htmlTotal.classList.add('hide');
+  } else {
+    htmlTotal.classList.remove('hide');
+    htmlTotal.insertAdjacentText('beforeend', total);
+  }
+}
+
 renderCartContents();
+renderTotal();
