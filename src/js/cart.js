@@ -1,9 +1,9 @@
-import { getLocalStorage } from './utils.mjs';
+import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
-  const cartItems = getLocalStorage('so-cart'); // always an array now
+  const cartItems = getLocalStorage("so-cart"); // always an array now
   const htmlItems = cartItems.map(cartItemTemplate);
-  document.querySelector('.product-list').innerHTML = htmlItems.join('');
+  document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
 
 function cartItemTemplate(item) {
@@ -19,11 +19,11 @@ function cartItemTemplate(item) {
 }
 
 function getTotal() {
-  const cartItems = getLocalStorage('so-cart');
+  const cartItems = getLocalStorage("so-cart");
   console.log(cartItems);
   let total = 0;
-  cartItems.forEach(item => {
-    console.log(item.FinalPrice)
+  cartItems.forEach((item) => {
+    console.log(item.FinalPrice);
     total += item.FinalPrice;
   });
 
@@ -33,12 +33,12 @@ function getTotal() {
 
 function renderTotal() {
   const total = getTotal();
-  const htmlTotal = document.querySelector('.cart-total');
-  const totalDiv = document.querySelector('.cart-footer')
+  const htmlTotal = document.querySelector(".cart-total");
+  const totalDiv = document.querySelector(".cart-footer");
   if (total == 0) {
-    totalDiv.classList.add('hide');
+    totalDiv.classList.add("hide");
   } else {
-    totalDiv.classList.remove('hide');
+    totalDiv.classList.remove("hide");
     htmlTotal.textContent = `Total: $${total}`;
   }
 }
