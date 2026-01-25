@@ -1,9 +1,9 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage } from './utils.mjs';
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart"); // always an array now
+  const cartItems = getLocalStorage('so-cart'); // always an array now
   const htmlItems = cartItems.map(cartItemTemplate);
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  document.querySelector('.product-list').innerHTML = htmlItems.join('');
 }
 
 function cartItemTemplate(item) {
@@ -34,11 +34,12 @@ function getTotal() {
 function renderTotal() {
   const total = getTotal();
   const htmlTotal = document.querySelector('.cart-total');
+  const totalDiv = document.querySelector('.cart-footer')
   if (total == 0) {
-    htmlTotal.classList.add('hide');
+    totalDiv.classList.add('hide');
   } else {
-    htmlTotal.classList.remove('hide');
-    htmlTotal.insertAdjacentText('beforeend', total);
+    totalDiv.classList.remove('hide');
+    htmlTotal.textContent = `Total: $${total}`;
   }
 }
 
