@@ -1,5 +1,6 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 import { findProductById } from "./productData.mjs";
+import { renderCartSubscript } from "./cartBadge.mjs";
 
 export default async function productDetails(productId) {
   // Retrieve product details based on the ID in the URL
@@ -20,6 +21,7 @@ export default async function productDetails(productId) {
   // Render product details and enable add-to-cart functionality
   renderProductDetails(product);
   document.getElementById("addToCart").addEventListener("click", addToCartHandler);
+
 }
 
 function renderProductDetails(product) {
@@ -38,6 +40,8 @@ async function addToCartHandler(e) {
   const product = await findProductById(e.currentTarget.dataset.id);
   console.log(product);
   addProductToCart(product);
+  // Update Subscript on Cart Addition (DOM reload update already handled).
+  renderCartSubscript();
 }
 
 function addProductToCart(product) {
