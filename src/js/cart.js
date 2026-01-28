@@ -1,5 +1,6 @@
 import { render } from "sass";
 import { getLocalStorage, setLocalStorage } from './utils.mjs';
+import { renderCartSubscript } from "./cartBadge.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart"); // always an array now
@@ -58,6 +59,7 @@ function handleRemovingItem(e) {
 
   renderCartContents();
   renderTotal();
+  renderCartSubscript();
 }
 
 renderCartContents();
