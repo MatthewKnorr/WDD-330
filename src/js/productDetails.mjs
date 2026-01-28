@@ -2,10 +2,22 @@ import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 import { findProductById } from "./productData.mjs";
 
 export default async function productDetails(productId) {
-  // use findProductById to get the details for the current product. findProductById will return a promise! use await or .then() to process it
-  // once we have the product details we can render out the HTML
-  // add a listener to Add to Cart button
+  // Retrieve product details based on the ID in the URL
   const product = await findProductById(productId);
+
+  // Handle cases where the product does not exist
+   if (!product) {
+    document.querySelector(".product-detail").innerHTML =
+      "<strong>Looks like this product packed up and left camp.<br>Please head back and choose from our available inventory.</strong>";
+
+    // Hide Add to Cart button when no valid product exists
+    const btn = document.getElementById("addToCart");
+    if (btn) btn.style.display = "none";
+    // Stop execution to prevent UI errors
+    return; 
+  }
+
+  // Render product details and enable add-to-cart functionality
   renderProductDetails(product);
   document.getElementById("addToCart").addEventListener("click", addToCartHandler);
 }
