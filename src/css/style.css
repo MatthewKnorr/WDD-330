@@ -215,6 +215,34 @@ button {
   display: none;
 }
 
+.cart {
+  position: relative;
+}
+
+.subscript {
+  position: absolute;
+  text-align:right;
+  top: -10px;
+  right: 30px;
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+  pointer-events: none;
+  border: solid 1px rgb(0, 0, 0);
+  border-radius:100%;
+  padding:3px;
+}
+
+@keyframes cartPop{
+  0% { transform: scale(1);}
+  40% { transform: scale(1.35);}
+  70% { transform: scale(.95);}
+  100% { transform: scale(1);}
+}
+
+.cart-animation{
+  animation: cartPop 300ms ease-out;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
