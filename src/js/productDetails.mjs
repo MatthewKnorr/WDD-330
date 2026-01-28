@@ -41,11 +41,18 @@ async function addToCartHandler(e) {
   console.log(product);
   addProductToCart(product);
   // Update Subscript on Cart Addition (DOM reload update already handled).
-  renderCartSubscript();
 }
 
 function addProductToCart(product) {
   const cart = getLocalStorage("so-cart") || []; // ✅ now defined
   cart.push(product);
   setLocalStorage("so-cart", cart);
+  renderCartSubscript();
+  const cartObj = document.querySelector(".cart");
+  // Resets Cart Animation Class.
+  cartObj.classList.remove('cart-animation');
+  // Forces animation reset.
+  void cartObj.offsetWidth;
+  // Re-instates Cart Animation Class.
+  cartObj.classList.add('cart-animation');
 }

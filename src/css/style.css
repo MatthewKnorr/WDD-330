@@ -223,6 +223,16 @@ button {
   padding:3px;
 }
 
+@keyframes cartPop{
+  0% { transform: scale(1);}
+  40% { transform: scale(1.35);}
+  70% { transform: scale(.95);}
+  100% { transform: scale(1);}
+}
+
+.cart-animation{
+  animation: cartPop 300ms ease-out;
+}
 
 @media screen and (min-width: 500px) {
   body {
