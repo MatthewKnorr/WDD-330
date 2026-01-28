@@ -1,5 +1,4 @@
 import { render } from "sass";
-import { getLocalStorage } from "./utils.mjs";
 import { getLocalStorage, setLocalStorage } from './utils.mjs';
 
 function renderCartContents() {
