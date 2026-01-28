@@ -202,6 +202,15 @@ button {
   grid-column: 3;
 }
 
+.cart-card span {
+  grid-row: 1;
+  grid-column: 4;
+}
+
+.cart-card span:hover {
+  cursor: pointer;
+}
+
 .hide {
   display: none;
 }
