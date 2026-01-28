@@ -1,5 +1,6 @@
 import { render } from "sass";
 import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from './utils.mjs';
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart"); // always an array now
@@ -16,6 +17,7 @@ function cartItemTemplate(item) {
     <p class="cart-card__color">${item.Colors[0].ColorName}</p>
     <p class="cart-card__quantity">qty: 1</p>
     <p class="cart-card__price">$${item.FinalPrice}</p>
+    <span data-id="${item.Id}">X</span>
   </li>`;
 }
 
@@ -44,5 +46,27 @@ function renderTotal() {
   }
 }
 
+function filterItem(array, removedId) {
+  return array.filter(item => item.Id !== removedId);
+}
+
+function handleRemovingItem(e) {
+  const id = e.target.dataset.id;
+
+  let cartItems = getLocalStorage('so-cart');
+  cartItems = filterItem(cartItems, id);
+  setLocalStorage('so-cart', cartItems);
+
+  renderCartContents();
+  renderTotal();
+}
+
 renderCartContents();
 renderTotal();
+
+const cartContainer = document.querySelector('.product-list');
+cartContainer.addEventListener('click', function(e) {
+  if (e.target.matches('span[data-id')) {
+    handleRemovingItem(e);
+  }
+})
