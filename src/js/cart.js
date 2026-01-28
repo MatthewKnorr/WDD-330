@@ -1,4 +1,3 @@
-import { render } from "sass";
 import { getLocalStorage, setLocalStorage } from './utils.mjs';
 import { renderCartSubscript } from "./cartBadge.mjs";
 
