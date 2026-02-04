@@ -1,6 +1,6 @@
 import { renderCartSubscript } from './cartBadge.mjs';
 import { productList } from './productList.mjs';
-
+import {loadHeaderFooter} from './utils.mjs';
 
 // Cart Subscript Rendering
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,3 +8,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 productList('.product-list', 'tents');
+
+loadHeaderFooter();

@@ -39,10 +39,43 @@ export function renderListWithTemplate(
   list,
   position = "afterbegin",
   clear = true
-){
+) {
   if (clear) {
     parentElement.innerHTML = '';
   }
   const htmlString = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlString.join(""));
+}
+
+export async function renderWithTemplate(templateFn, parentElement, data, callback, position = "afterbegin", clear = true) {
+  // get template using function...no need to loop this time.
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+  const htmlString = await templateFn(data);
+  parentElement.insertAdjacentHTML(position, htmlString);
+  if (callback) {
+    callback(data);
+  }
+}
+
+export function loadTemplate(path) {
+  return async function () {
+    const res = await fetch(path);
+    if (res.ok) {
+      const html = await res.text();
+      return html;
+    }
+  }
+}
+
+export async function loadHeaderFooter() {
+  const headerTemplate = loadTemplate("/partials/header.html");
+  const footerTemplate = loadTemplate("/partials/footer.html");
+
+  const headerElement = document.querySelector("header");
+  const footerElement = document.querySelector("footer");
+
+  await renderWithTemplate(headerTemplate, headerElement);
+  await renderWithTemplate(footerTemplate, footerElement);
 }
