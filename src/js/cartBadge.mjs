@@ -8,4 +8,5 @@ export function renderCartSubscript() {
   const count = cartItems.length;
   subBadge.textContent = count;
   subBadge.classList.toggle("hide", count === 0);
+  console.log(subBadge);
 }
