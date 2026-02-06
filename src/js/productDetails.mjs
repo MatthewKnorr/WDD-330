@@ -32,7 +32,7 @@ function renderProductDetails(product) {
     document.querySelector('#productImage').alt = product.Name;
 
     document.querySelector('#productPrice').innerHTML = `
-    <span class = "strikethrough">$${product.SuggestedRetailPrice}</span> ${product.FinalPrice}
+    <span class = "strikethrough">$${product.SuggestedRetailPrice}</span> $${product.FinalPrice}
     <span class = "percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!`;
 
     document.querySelector('#productColor').innerText = product.Colors[0].ColorName;

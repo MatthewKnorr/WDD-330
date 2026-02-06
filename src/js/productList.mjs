@@ -13,7 +13,7 @@ function productCard(product){
             <h2 class="card__name">${product.NameWithoutBrand}</h2>
 
             <p class="product-card__price">
-            <span class = "strikethrough"> $${product.SuggestedRetailPrice}</span> ${product.FinalPrice}
+            <span class = "strikethrough"> $${product.SuggestedRetailPrice}</span> $${product.FinalPrice}
             <span class = "percent-off"> Save ${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}%</p>
             </a>
           </li>`
