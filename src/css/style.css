@@ -236,6 +236,21 @@ button {
   padding:3px;
 }
 
+.underline{
+  text-decoration: underline;
+}
+.strikethrough{
+  color:red;
+  text-decoration:line-through;
+  padding-right:7px;
+}
+
+.percent-off{
+  color:red;
+  padding-left:7px;
+  font-size: 20px;
+  font-weight: bolder;
+}
 @keyframes cartPop{
   0% { transform: scale(1);}
   40% { transform: scale(1.35);}

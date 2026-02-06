@@ -1,5 +1,6 @@
 import { getData } from './productData.mjs';
 import { renderListWithTemplate } from './utils.mjs';
+import { discountPercent} from './utils.mjs';
 
 function productCard(product){
   return `<li class="product-card">
@@ -10,7 +11,11 @@ function productCard(product){
             />
             <h3 class="card__brand">${product.Brand.Name}</h3>
             <h2 class="card__name">${product.NameWithoutBrand}</h2>
-            <p class="product-card__price">$${product.FinalPrice}</p></a>
+
+            <p class="product-card__price">
+            <span class = "strikethrough"> $${product.SuggestedRetailPrice}</span> ${product.FinalPrice}
+            <span class = "percent-off"> Save ${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}%</p>
+            </a>
           </li>`
 }
 
