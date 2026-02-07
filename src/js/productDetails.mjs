@@ -1,6 +1,7 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 import { findProductById } from "./productData.mjs";
 import { renderCartSubscript } from "./cartBadge.mjs";
+import { discountPercent } from "./utils.mjs";
 
 export default async function productDetails(productId) {
   // Retrieve product details based on the ID in the URL
@@ -29,7 +30,11 @@ function renderProductDetails(product) {
     document.querySelector('#productNameWithoutBrand').innerText = product.NameWithoutBrand;
     document.querySelector('#productImage').src = product.Image;
     document.querySelector('#productImage').alt = product.Name;
-    document.querySelector('#productPrice').innerText = product.FinalPrice;
+
+    document.querySelector('#productPrice').innerHTML = `
+    <span class = "strikethrough">$${product.SuggestedRetailPrice}</span> $${product.FinalPrice}
+    <span class = "percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!`;
+
     document.querySelector('#productColor').innerText = product.Colors[0].ColorName;
     document.querySelector('#productDescription').innerHTML = product.DescriptionHtmlSimple;
     document.querySelector('#addToCart').dataset.id = product.Id;

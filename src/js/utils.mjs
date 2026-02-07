@@ -1,5 +1,5 @@
 // utils.mjs
-
+import { renderCartSubscript } from './cartBadge.mjs';
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
@@ -78,4 +78,10 @@ export async function loadHeaderFooter() {
 
   await renderWithTemplate(headerTemplate, headerElement);
   await renderWithTemplate(footerTemplate, footerElement);
+  renderCartSubscript();
+}
+
+export function discountPercent(suggestedPrice, finalPrice){
+  const discountPrice = suggestedPrice - finalPrice;
+  return ((discountPrice/suggestedPrice)* 100).toFixed(0);
 }
