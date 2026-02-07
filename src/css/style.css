@@ -236,6 +236,25 @@ button {
   padding:3px;
 }
 
+.alert-list {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.alert-list p {
+  margin: 0;
+}
+
+#closeAlerts {
+  background-color: white;
+  color: black;
+  font-size: medium;
+  margin-top: 5px;
+  border: solid black;
+  border-radius: 15px;
+  line-height: 10px;
+}
+
 @keyframes cartPop{
   0% { transform: scale(1);}
   40% { transform: scale(1.35);}

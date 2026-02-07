@@ -1,0 +1,17 @@
+[
+    {
+        "message": "This is only a test",
+        "background": "darkblue",
+        "color": "white"
+    },
+    {
+        "message": "This is a green test",
+        "background": "darkgreen",
+        "color": "white"
+    }, 
+    {
+        "message": "This website is incomplete. Please do not buy anything.",
+        "background": "darkred",
+        "color": "white"
+    }
+]
