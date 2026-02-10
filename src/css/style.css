@@ -255,6 +255,12 @@ button {
   line-height: 10px;
 }
 
+.closeModal {
+  background-color: white;
+  color: red;
+  float: right;
+}
+
 .underline{
   text-decoration: underline;
 }
