@@ -90,6 +90,10 @@ header {
   text-decoration: none;
   color: black;
 }
+
+#product-title::first-letter {
+  text-transform: uppercase;
+}
 /* utility classes */
 .highlight {
   color: var(--tertiary-color);

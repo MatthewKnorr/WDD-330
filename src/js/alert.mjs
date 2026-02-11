@@ -1,7 +1,7 @@
-import { getData } from './productData.mjs';
+import { getJson } from './productData.mjs';
 
 export async function displayAlerts() {
-    const alerts = await getData('alerts');
+    const alerts = await getJson('alerts');
     if (!alerts) {
         return;
     }
