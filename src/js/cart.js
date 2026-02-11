@@ -1,10 +1,10 @@
-import { getLocalStorage, setLocalStorage } from './utils.mjs';
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 import { renderCartSubscript } from "./cartBadge.mjs";
 
 function normalizeCart(cart) {
   const map = {};
 
-  cart.forEach(item => {
+  cart.forEach((item) => {
     if (!map[item.Id]) {
       map[item.Id] = { ...item, quantity: item.quantity || 1 };
     } else {
@@ -59,7 +59,7 @@ function getTotals() {
   const cartItems = getCart();
   let total = 0;
 
-  cartItems.forEach(item => {
+  cartItems.forEach((item) => {
     total += item.FinalPrice * (item.quantity || 1);
   });
 
@@ -81,7 +81,7 @@ function renderTotal() {
 }
 
 function handleRemovingItemById(id) {
-  const cartItems = getCart().filter(item => item.Id !== id);
+  const cartItems = getCart().filter((item) => item.Id !== id);
   setLocalStorage("so-cart", cartItems);
   renderCartContents();
   renderTotal();
@@ -89,7 +89,7 @@ function handleRemovingItemById(id) {
 }
 
 function handleQuantityInput(e) {
-  if (!e.target.matches('.cart-card__quantity input')) return;
+  if (!e.target.matches(".cart-card__quantity input")) return;
 
   const id = e.target.dataset.id;
   let qty = parseInt(e.target.value, 10);
@@ -100,7 +100,7 @@ function handleQuantityInput(e) {
   }
 
   const cartItems = getCart();
-  const item = cartItems.find(i => i.Id === id);
+  const item = cartItems.find((i) => i.Id === id);
   if (!item) return;
 
   item.quantity = qty;
@@ -117,12 +117,12 @@ renderCartContents();
 renderTotal();
 renderCartSubscript();
 
-const cartContainer = document.querySelector('.product-list');
+const cartContainer = document.querySelector(".product-list");
 
-cartContainer.addEventListener('click', e => {
-  if (e.target.matches('span[data-id]')) {
+cartContainer.addEventListener("click", (e) => {
+  if (e.target.matches("span[data-id]")) {
     handleRemovingItemById(e.target.dataset.id);
   }
 });
 
-cartContainer.addEventListener('input', handleQuantityInput);
+cartContainer.addEventListener("input", handleQuantityInput);
