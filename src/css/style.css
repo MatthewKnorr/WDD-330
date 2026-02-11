@@ -264,7 +264,27 @@ button {
   font-size: 0.9em;
 }
 
+.cart-savings {
+  color: #2e7d32;
+  font-weight: 600;
+  padding-bottom: 5px;
+}
 
+.cart-total {
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-top: 2px solid #e0e0e0;
+  padding-top: 5px;
+}
+
+.cart-savings,
+.cart-total {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+/* Cart Mechanics */
 
 .quantity-controls {
   display: flex;
@@ -284,9 +304,6 @@ button {
   transition: background 0.2s ease;
 }
 
-.qty-btn:hover {
-  background: #f0f0f0;
-}
 
 .qty-value {
   min-width: 20px;
