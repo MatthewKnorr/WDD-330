@@ -327,6 +327,8 @@ button {
 .underline {
   text-decoration: underline;
 }
+
+/* Discount */
 .strikethrough {
   color: red;
   text-decoration: line-through;
