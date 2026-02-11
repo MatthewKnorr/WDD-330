@@ -3,9 +3,9 @@ import { renderListWithTemplate, discountPercent } from './utils.mjs';
 
 function productCard(product){
   return `<li class="product-card">
-            <a href="product_pages/index.html?product=${product.Id}">
+            <a href="../product_pages/index.html?product=${product.Id}">
             <img
-              src='${product.Image}'
+              src='${product.Images.PrimaryMedium}'
               alt='${product.Name}'
             />
             <h3 class="card__brand">${product.Brand.Name}</h3>
@@ -116,7 +116,7 @@ function productModal(product) {
 
         <h2 class="divider" id="productNameWithoutBrand">${product.NameWithoutBrand}</h2>
 
-        <img class="divider" src="${product.Image}" alt="${product.Name}" id="productImage" />
+        <img class="divider" src="${product.Images.PrimaryMedium}" alt="${product.Name}" id="productImage" />
 
         <p class="product-card__price" id="productPrice">
           <span class = "strikethrough">$${product.SuggestedRetailPrice}</span> $${product.FinalPrice}
@@ -155,7 +155,7 @@ export async function productList(selector, category){
   console.log(products);
 
   // Rendering
-  renderListWithTemplate(productCard, el, products)
+  renderListWithTemplate(productCard, el, products);
 
   // Set up buttons
   const buttons = document.querySelectorAll('.quick-view');
