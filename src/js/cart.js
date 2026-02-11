@@ -1,72 +1,128 @@
-import { getLocalStorage, setLocalStorage } from './utils.mjs';
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 import { renderCartSubscript } from "./cartBadge.mjs";
 
+function normalizeCart(cart) {
+  const map = {};
+
+  cart.forEach((item) => {
+    if (!map[item.Id]) {
+      map[item.Id] = { ...item, quantity: item.quantity || 1 };
+    } else {
+      map[item.Id].quantity += item.quantity || 1;
+    }
+  });
+
+  return Object.values(map);
+}
+
+function getCart() {
+  const rawCart = getLocalStorage("so-cart") || [];
+  const normalized = normalizeCart(rawCart);
+  setLocalStorage("so-cart", normalized);
+  return normalized;
+}
+
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart"); // always an array now
+  const cartItems = getCart();
   const htmlItems = cartItems.map(cartItemTemplate);
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
 
 function cartItemTemplate(item) {
-  return `<li class="cart-card divider">
+  const qty = item.quantity || 1;
+
+  const originalTotal = (item.SuggestedRetailPrice * qty).toFixed(2);
+  const discountedTotal = (item.FinalPrice * qty).toFixed(2);
+
+  return `<li class="cart-card divider" data-id="${item.Id}">
     <a href="#" class="cart-card__image">
       <img src="${item.Image}" alt="${item.Name}" />
     </a>
+
     <a href="#"><h2 class="card__name">${item.Name}</h2></a>
     <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-    <p class="cart-card__quantity">qty: 1</p>
-    <p class="cart-card__price"><span class = "strikethrough">$${item.SuggestedRetailPrice}</span>$${item.FinalPrice}</p>
+
+    <div class="cart-card__quantity">
+      <input type="number" min="1" value="${qty}" data-id="${item.Id}" />
+    </div>
+
+    <div class="cart-card__price">
+      <span class="strikethrough">$${originalTotal}</span>
+      <strong>$${discountedTotal}</strong>
+    </div>
+
     <span data-id="${item.Id}">X</span>
   </li>`;
 }
 
-function getTotal() {
-  const cartItems = getLocalStorage("so-cart");
-  console.log(cartItems);
+function getTotals() {
+  const cartItems = getCart();
   let total = 0;
+
   cartItems.forEach((item) => {
-    console.log(item.FinalPrice);
-    total += item.FinalPrice;
+    total += item.FinalPrice * (item.quantity || 1);
   });
 
-  console.log(total);
   return total;
 }
 
 function renderTotal() {
-  const total = getTotal();
+  const total = getTotals();
   const htmlTotal = document.querySelector(".cart-total");
   const totalDiv = document.querySelector(".cart-footer");
-  if (total == 0) {
+
+  if (total === 0) {
     totalDiv.classList.add("hide");
-  } else {
-    totalDiv.classList.remove("hide");
-    htmlTotal.textContent = `Total: $${total}`;
+    return;
   }
+
+  totalDiv.classList.remove("hide");
+  htmlTotal.textContent = `Total: $${total.toFixed(2)}`;
 }
 
-function filterItem(array, removedId) {
-  return array.filter(item => item.Id !== removedId);
+function handleRemovingItemById(id) {
+  const cartItems = getCart().filter((item) => item.Id !== id);
+  setLocalStorage("so-cart", cartItems);
+  renderCartContents();
+  renderTotal();
+  renderCartSubscript();
 }
 
-function handleRemovingItem(e) {
+function handleQuantityInput(e) {
+  if (!e.target.matches(".cart-card__quantity input")) return;
+
   const id = e.target.dataset.id;
+  let qty = parseInt(e.target.value, 10);
 
-  let cartItems = getLocalStorage('so-cart');
-  cartItems = filterItem(cartItems, id);
-  setLocalStorage('so-cart', cartItems);
+  if (isNaN(qty) || qty < 1) {
+    handleRemovingItemById(id);
+    return;
+  }
+
+  const cartItems = getCart();
+  const item = cartItems.find((i) => i.Id === id);
+  if (!item) return;
+
+  item.quantity = qty;
+  setLocalStorage("so-cart", cartItems);
 
   renderCartContents();
   renderTotal();
   renderCartSubscript();
 }
 
+/* init */
+
 renderCartContents();
 renderTotal();
+renderCartSubscript();
 
-const cartContainer = document.querySelector('.product-list');
-cartContainer.addEventListener('click', function(e) {
-  if (e.target.matches('span[data-id')) {
-    handleRemovingItem(e);
+const cartContainer = document.querySelector(".product-list");
+
+cartContainer.addEventListener("click", (e) => {
+  if (e.target.matches("span[data-id]")) {
+    handleRemovingItemById(e.target.dataset.id);
   }
-})
+});
+
+cartContainer.addEventListener("input", handleQuantityInput);

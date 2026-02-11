@@ -30,7 +30,6 @@ header {
   flex-grow: 1;
   justify-content: space-between;
   padding: 0 10px;
-  
 }
 .logo {
   line-height: 60px;
@@ -175,12 +174,12 @@ button {
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
-  
 }
 
 .cart-card__image {
   grid-row: 1/3;
   grid-column: 1;
+  padding: 15px;
 }
 .cart-card p {
   margin-top: 0;
@@ -223,17 +222,42 @@ button {
   right: 0;
 }
 
+.cart-card.divider {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto 1em auto;
+  padding: 0.75em 1em;
+}
+
+.cart-card__price {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.cart-card__price strong {
+  font-size: 1.1em;
+}
+
+.cart-card__quantity input {
+  width: 60px;
+  padding: 4px;
+  text-align: center;
+  font-size: 0.9em;
+}
+
 .subscript {
   position: absolute;
-  text-align:right;
+  text-align: right;
   top: -10px;
   right: 30px;
   color: rgb(0, 0, 0);
   font-size: 15px;
   pointer-events: none;
   border: solid 1px rgb(0, 0, 0);
-  border-radius:100%;
-  padding:3px;
+  border-radius: 100%;
+  padding: 3px;
 }
 
 .alert-list {
@@ -255,29 +279,37 @@ button {
   line-height: 10px;
 }
 
-.underline{
+.underline {
   text-decoration: underline;
 }
-.strikethrough{
-  color:red;
-  text-decoration:line-through;
-  padding-right:7px;
+.strikethrough {
+  color: red;
+  text-decoration: line-through;
+  padding-right: 7px;
 }
 
-.percent-off{
-  color:red;
-  padding-left:7px;
+.percent-off {
+  color: red;
+  padding-left: 7px;
   font-size: 20px;
   font-weight: bolder;
 }
-@keyframes cartPop{
-  0% { transform: scale(1);}
-  40% { transform: scale(1.35);}
-  70% { transform: scale(.95);}
-  100% { transform: scale(1);}
+@keyframes cartPop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.35);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-.cart-animation{
+.cart-animation {
   animation: cartPop 300ms ease-out;
 }
 
@@ -299,4 +331,3 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
-
