@@ -169,9 +169,11 @@ button {
 /* Start cart list card styles */
 .cart-card {
   display: grid;
-  grid-template-columns: 25% auto 15%;
-  font-size: var(--small-font);
+  grid-template-columns: 150px 1fr 110px 40px;
   align-items: center;
+  column-gap: 1rem;
+  font-size: var(--small-font);
+  width: 100%;
 }
 
 .cart-card__image {
@@ -193,8 +195,9 @@ button {
 }
 
 .cart-card__quantity {
-  grid-row: 1;
-  grid-column: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cart-card__price {
@@ -203,8 +206,11 @@ button {
 }
 
 .cart-card span {
-  grid-row: 1;
+ 
   grid-column: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cart-card span:hover {
@@ -244,6 +250,8 @@ button {
   text-align: center;
   font-size: 0.9em;
 }
+
+
 
 .quantity-controls {
   display: flex;
@@ -417,7 +425,7 @@ button {
   }
   .cart-card {
     font-size: inherit;
-    grid-template-columns: 150px auto 15%;
+    /* grid-template-columns: 150px auto 15%; */
   }
 }
 
