@@ -8,4 +8,8 @@ loadHeaderFooter();
 const productType = getParam("page");
 productList(".product-list", productType);
 
+const titleEl = document.querySelector('#product-title');
+const formattedTitle = productType.replace(/-/g, " ");
+titleEl.innerHTML = formattedTitle;
+
 displayAlerts();
