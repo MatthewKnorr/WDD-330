@@ -1,8 +1,11 @@
 import { productList } from "./productList.mjs";
 import { loadHeaderFooter } from "./utils.mjs";
 import { displayAlerts } from "./alert.mjs";
+import { getParam } from "./utils.mjs";
 
 loadHeaderFooter();
-productList(".product-list", "tents");
+
+const productType = getParam("page");
+productList(".product-list", productType);
 
 displayAlerts();

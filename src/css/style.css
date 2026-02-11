@@ -77,6 +77,19 @@ header {
 .logo--square > div {
   margin-top: -1.7em;
 }
+#all-product-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+}
+#all-product-div img {
+  width: 20vw;
+}
+#all-product-div a {
+  text-decoration: none;
+  color: black;
+}
 /* utility classes */
 .highlight {
   color: var(--tertiary-color);
