@@ -279,7 +279,13 @@ button {
   line-height: 10px;
 }
 
-.underline {
+.closeModal {
+  background-color: white;
+  color: red;
+  float: right;
+}
+
+.underline{
   text-decoration: underline;
 }
 .strikethrough {
