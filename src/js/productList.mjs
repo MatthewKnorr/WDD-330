@@ -1,178 +1,180 @@
-import { getData, findProductById } from './productData.mjs';
-import { renderListWithTemplate, discountPercent } from './utils.mjs';
+  import { getData, findProductById } from './productData.mjs';
+  import { renderListWithTemplate, discountPercent } from './utils.mjs';
 
-function productCard(product){
-  return `<li class="product-card">
-            <a href="../product_pages/index.html?product=${product.Id}">
-            <img
-              src='${product.Images.PrimaryMedium}'
-              alt='${product.Name}'
-            />
-            <h3 class="card__brand">${product.Brand.Name}</h3>
-            <h2 class="card__name">${product.NameWithoutBrand}</h2>
+  function productCard(product){
+    return `<li class="product-card">
+              <a href="../product_pages/index.html?product=${product.Id}">
+              <img
+                src='${product.Images.PrimaryMedium}'
+                alt='${product.Name}'
+              />
+              <h3 class="card__brand">${product.Brand.Name}</h3>
+              <h2 class="card__name">${product.NameWithoutBrand}</h2>
 
-            <button class="quick-view" id=${product.Id}>Quick View</button>
+              <button class="quick-view" id=${product.Id}>Quick View</button>
 
-            <p class="product-card__price">
-            <span class="strikethrough">$${product.SuggestedRetailPrice}</span> 
-            $${product.FinalPrice}
-            <span class="percent-off">
-              Save ${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}%
-            </span>
-            </p>
-            </a>
-          </li>`
-}
-
-function sortProducts(products, criteria){
-  const sorted = [...products];
-
-  switch(criteria){
-    case "price-low":
-      sorted.sort((a,b) => a.FinalPrice - b.FinalPrice);
-      break;
-
-    case "price-high":
-      sorted.sort((a,b) => b.FinalPrice - a.FinalPrice);
-      break;
-
-    case "discount":
-      sorted.sort((a,b) => {
-        const discountA = (a.SuggestedRetailPrice - a.FinalPrice) / a.SuggestedRetailPrice;
-        const discountB = (b.SuggestedRetailPrice - b.FinalPrice) / b.SuggestedRetailPrice;
-        return discountB - discountA;
-      });
-      break;
-
-    case "name-asc":
-      sorted.sort((a,b) =>
-        a.NameWithoutBrand.localeCompare(b.NameWithoutBrand)
-      );
-      break;
-
-    case "name-desc":
-      sorted.sort((a,b) =>
-        b.NameWithoutBrand.localeCompare(a.NameWithoutBrand)
-      );
-      break;
-
-    case "brand":
-      sorted.sort((a,b) =>
-        a.Brand.Name.localeCompare(b.Brand.Name)
-      );
-      break;
+              <p class="product-card__price">
+              <span class="strikethrough">$${product.SuggestedRetailPrice}</span> 
+              $${product.FinalPrice}
+              <span class="percent-off">
+                Save ${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}%
+              </span>
+              </p>
+              </a>
+            </li>`
   }
 
-  return sorted;
-}
+  function sortProducts(products, criteria){
+    const sorted = [...products];
 
-function filterProducts(products, searchTerm){
-  const term = searchTerm.toLowerCase();
+    switch(criteria){
+      case "price-low":
+        sorted.sort((a,b) => a.FinalPrice - b.FinalPrice);
+        break;
 
-  return products.filter(product =>
-    product.NameWithoutBrand.toLowerCase().includes(term) ||
-    product.Brand.Name.toLowerCase().includes(term)
-  );
-}
+      case "price-high":
+        sorted.sort((a,b) => b.FinalPrice - a.FinalPrice);
+        break;
 
-function createControls(container, products){
-  const controlsDiv = document.createElement("div");
-  controlsDiv.classList.add("controls");
+      case "discount":
+        sorted.sort((a,b) => {
+          const discountA = (a.SuggestedRetailPrice - a.FinalPrice) / a.SuggestedRetailPrice;
+          const discountB = (b.SuggestedRetailPrice - b.FinalPrice) / b.SuggestedRetailPrice;
+          return discountB - discountA;
+        });
+        break;
 
-  controlsDiv.innerHTML = `
-    <input type="text" id="search-input" placeholder="Search products..." />
-    
-    <select id="sort-select">
-      <option value="">Sort By</option>
-      <option value="price-low">Price: Low → High</option>
-      <option value="price-high">Price: High → Low</option>
-      <option value="discount">Discount: High → Low</option>
-      <option value="name-asc">Name: A → Z</option>
-      <option value="name-desc">Name: Z → A</option>
-      <option value="brand">Brand: A → Z</option>
-    </select>
-  `;
+      case "name-asc":
+        sorted.sort((a,b) =>
+          a.NameWithoutBrand.localeCompare(b.NameWithoutBrand)
+        );
+        break;
 
-  container.parentElement.insertBefore(controlsDiv, container);
+      case "name-desc":
+        sorted.sort((a,b) =>
+          b.NameWithoutBrand.localeCompare(a.NameWithoutBrand)
+        );
+        break;
 
-  const searchInput = controlsDiv.querySelector("#search-input");
-  const sortSelect = controlsDiv.querySelector("#sort-select");
+      case "brand":
+        sorted.sort((a,b) =>
+          a.Brand.Name.localeCompare(b.Brand.Name)
+        );
+        break;
+    }
 
-  function updateDisplay(){
-    let filtered = filterProducts(products, searchInput.value);
-    let sorted = sortProducts(filtered, sortSelect.value);
-
-    container.innerHTML = "";
-    renderListWithTemplate(productCard, container, sorted);
+    return sorted;
   }
 
-  searchInput.addEventListener("input", updateDisplay);
-  sortSelect.addEventListener("change", updateDisplay);
-function productModal(product) {
-  return `
-    <dialog class="product-detail">
-        <button class="closeModal">X</button>
-        <h3 id="productName">${product.Brand.Name}</h3>
+  function filterProducts(products, searchTerm){
+    const term = searchTerm.toLowerCase();
 
-        <h2 class="divider" id="productNameWithoutBrand">${product.NameWithoutBrand}</h2>
+    return products.filter(product =>
+      product.NameWithoutBrand.toLowerCase().includes(term) ||
+      product.Brand.Name.toLowerCase().includes(term)
+    );
+  }
 
-        <img class="divider" src="${product.Images.PrimaryMedium}" alt="${product.Name}" id="productImage" />
+  function createControls(container, products){
+    const controlsDiv = document.createElement("div");
+    controlsDiv.classList.add("controls");
 
-        <p class="product-card__price" id="productPrice">
-          <span class = "strikethrough">$${product.SuggestedRetailPrice}</span> $${product.FinalPrice}
-          <span class = "percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!
-        </p>
+    controlsDiv.innerHTML = `
+      <input type="text" id="search-input" placeholder="Search products..." />
+      
+      <select id="sort-select">
+        <option value="">Sort By</option>
+        <option value="price-low">Price: Low → High</option>
+        <option value="price-high">Price: High → Low</option>
+        <option value="discount">Discount: High → Low</option>
+        <option value="name-asc">Name: A → Z</option>
+        <option value="name-desc">Name: Z → A</option>
+        <option value="brand">Brand: A → Z</option>
+      </select>
+    `;
 
-        <p class="product__color" id="productColor">${product.Colors[0].ColorName}</p>
+    container.parentElement.insertBefore(controlsDiv, container);
 
-        <p class="product__description" id="productDescription">${product.DescriptionHtmlSimple}</p>
+    const searchInput = controlsDiv.querySelector("#search-input");
+    const sortSelect = controlsDiv.querySelector("#sort-select");
 
-        <div class="product-detail__add">
-          <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-        </div>
-      </dialog>
-  `
-}
+    function updateDisplay(){
+      let filtered = filterProducts(products, searchInput.value);
+      let sorted = sortProducts(filtered, sortSelect.value);
 
-function renderModal(product) {
-  const mainEl = document.querySelector('main');
-  mainEl.insertAdjacentHTML('beforeend', productModal(product));
-  const dialog = document.querySelector('dialog');
-  dialog.showModal();
+      container.innerHTML = "";
+      renderListWithTemplate(productCard, container, sorted);
+    }
 
-  const close = document.querySelector('.closeModal');
-  close.addEventListener('click', () => {
-    dialog.close();
-  })
-}
+    searchInput.addEventListener("input", updateDisplay);
+    sortSelect.addEventListener("change", updateDisplay);
+  }
+  function productModal(product) {
+    return `
+      <dialog class="product-detail">
+          <button class="closeModal">X</button>
+          <h3 id="productName">${product.Brand.Name}</h3>
 
-export async function productList(selector, category){
-  const el = document.querySelector(selector);
-  const products = await getData(category);
+          <h2 class="divider" id="productNameWithoutBrand">${product.NameWithoutBrand}</h2>
 
-  renderListWithTemplate(productCard, el, products);
-  createControls(el, products);
-  console.log(products);
+          <img class="divider" src="${product.Images.PrimaryMedium}" alt="${product.Name}" id="productImage" />
 
-  // Rendering
-  renderListWithTemplate(productCard, el, products);
+          <p class="product-card__price" id="productPrice">
+            <span class = "strikethrough">$${product.SuggestedRetailPrice}</span> $${product.FinalPrice}
+            <span class = "percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!
+          </p>
 
-  // Set up buttons
-  const buttons = document.querySelectorAll('.quick-view');
-  buttons.forEach(button => {
-    button.addEventListener('click', async () => {
-      event.preventDefault();
-      const product = await findProductById(button.id);
-      renderModal(product);
+          <p class="product__color" id="productColor">${product.Colors[0].ColorName}</p>
+
+          <p class="product__description" id="productDescription">${product.DescriptionHtmlSimple}</p>
+
+          <div class="product-detail__add">
+            <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
+          </div>
+        </dialog>
+    `
+  }
+
+  function renderModal(product) {
+    const mainEl = document.querySelector('main');
+    mainEl.insertAdjacentHTML('beforeend', productModal(product));
+    const dialog = document.querySelector('dialog');
+    dialog.showModal();
+
+    const close = document.querySelector('.closeModal');
+    close.addEventListener('click', () => {
+      dialog.close();
     })
-  })
+  }
 
-  /*
-  console.log(products);
-  products.forEach(tent => {
-    const card = productCard(tent);
-    cardList += card;
-  });
-  selector.insertAdjacentHTML("beforeend", cardList);
-  */
-}
+  export async function productList(selector, category){
+    const el = document.querySelector(selector);
+    const products = await getData(category);
+
+    renderListWithTemplate(productCard, el, products);
+    createControls(el, products);
+    console.log(products);
+
+    // Rendering
+    renderListWithTemplate(productCard, el, products);
+
+    // Set up buttons
+    const buttons = document.querySelectorAll('.quick-view');
+    buttons.forEach(button => {
+      button.addEventListener('click', async () => {
+        event.preventDefault();
+        const product = await findProductById(button.id);
+        renderModal(product);
+      })
+    })
+
+    /*
+    console.log(products);
+    products.forEach(tent => {
+      const card = productCard(tent);
+      cardList += card;
+    });
+    selector.insertAdjacentHTML("beforeend", cardList);
+    */
+  }
+
