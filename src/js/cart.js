@@ -16,10 +16,7 @@ function normalizeCart(cart) {
 }
 
 function getCart() {
-  const rawCart = getLocalStorage("so-cart") || [];
-  const normalized = normalizeCart(rawCart);
-  setLocalStorage("so-cart", normalized);
-  return normalized;
+  return getLocalStorage("so-cart") || [];
 }
 
 function renderCartContents() {
@@ -30,27 +27,22 @@ function renderCartContents() {
 
 function cartItemTemplate(item) {
   const qty = item.quantity || 1;
-
   const originalTotal = (item.SuggestedRetailPrice * qty).toFixed(2);
   const discountedTotal = (item.FinalPrice * qty).toFixed(2);
 
   return `<li class="cart-card divider" data-id="${item.Id}">
     <a href="#" class="cart-card__image">
-      <img src="${item.Image}" alt="${item.Name}" />
+      <img src="${item.Images?.PrimaryLarge || item.Image}" alt="${item.Name}" />
     </a>
-
     <a href="#"><h2 class="card__name">${item.Name}</h2></a>
-    <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-
+    <p class="cart-card__color">${item.Colors?.[0]?.ColorName || ""}</p>
     <div class="cart-card__quantity">
       <input type="number" min="1" value="${qty}" data-id="${item.Id}" />
     </div>
-
     <div class="cart-card__price">
       <span class="strikethrough">$${originalTotal}</span>
       <strong>$${discountedTotal}</strong>
     </div>
-
     <span data-id="${item.Id}">X</span>
   </li>`;
 }
@@ -106,12 +98,12 @@ function handleQuantityInput(e) {
   item.quantity = qty;
   setLocalStorage("so-cart", cartItems);
 
-  renderCartContents();
   renderTotal();
   renderCartSubscript();
 }
 
-/* init */
+const initialCart = normalizeCart(getLocalStorage("so-cart") || []);
+setLocalStorage("so-cart", initialCart);
 
 renderCartContents();
 renderTotal();
@@ -125,4 +117,4 @@ cartContainer.addEventListener("click", (e) => {
   }
 });
 
-cartContainer.addEventListener("input", handleQuantityInput);
+cartContainer.addEventListener("change", handleQuantityInput);
