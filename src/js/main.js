@@ -1,8 +1,8 @@
-import { productList } from './productList.mjs';
-import {loadHeaderFooter} from './utils.mjs';
-import { displayAlerts } from './alert.mjs';
+import { productList } from "./productList.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
+import { displayAlerts } from "./alert.mjs";
 
-productList('.product-list', 'tents');
+productList(".product-list", "tents");
 
 loadHeaderFooter();
 
