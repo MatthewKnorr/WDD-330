@@ -9,10 +9,22 @@ function convertToJson(res) {
 }
 
 export async function getData(category) {
-  const response = await fetch(baseURL + `/products/search/${category}`);
-  const data = await convertToJson(response);
+  if (!category) {
+    throw new Error("No category provided to getData()");
+  }
+
+  const url = `${baseURL.replace(/\/$/, "")}/products/search/${category}`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch products: ${response.status}`);
+  }
+
+  const data = await response.json();
   return data.Result;
 }
+
 
 export async function getJson(json) {
   return fetch(`../json/${json}.json`)
