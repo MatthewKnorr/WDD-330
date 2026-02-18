@@ -31,6 +31,10 @@ header {
   justify-content: space-between;
   padding: 0 10px;
 }
+#main-header {
+  display: flex;
+  align-items: center;
+}
 .logo {
   line-height: 60px;
   width: 245px;
@@ -39,6 +43,7 @@ header {
   font-size: 30px;
   text-align: right;
   font-family: var(--font-headline);
+  flex-shrink: 0;
 }
 .logo img {
   width: 60px;
@@ -164,6 +169,13 @@ button {
   margin: 0.5em 0;
 }
 
+.product-card img {
+  display: block;
+  margin: 0 auto;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
 .card__brand {
   font-size: var(--small-font);
 }
@@ -181,6 +193,7 @@ button {
 
 .product-detail img {
   width: 100%;
+  border-radius: 5px;
 }
 
 /* Start cart list card styles */
@@ -197,6 +210,9 @@ button {
   grid-row: 1/3;
   grid-column: 1;
   padding: 15px;
+}
+.cart-card__image img{
+  border-radius: 5px;
 }
 .cart-card p {
   margin-top: 0;
@@ -376,6 +392,23 @@ button {
   color: #888;
 }
 
+/* Breadcrumb */
+.breadcrumb {
+  flex: 1;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.crumb-home {
+  text-decoration: none;
+  color: inherit;
+}
+.crumb-home:hover {
+  opacity: 0.8;
+}
+
 
 /* Backpack */
 .subscript {
@@ -473,3 +506,5 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+
