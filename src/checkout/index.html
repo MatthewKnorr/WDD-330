@@ -8,7 +8,7 @@
 
     <title>Sleep Outside | Checkout</title>
 
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <script type="module" src="/js/main.js"></script>
   </head>
 
@@ -18,6 +18,76 @@
     <main class="divider">
       <section class="products">
         <h2>Review & Place your Order</h2>
+
+        <form id="checkoutForm" class ="formPanel">
+          <fieldset class ="group">
+            <legend>Shipping</legend>
+
+            <label>
+              First name
+              <input id="fname" name="fname" type="text">
+            </label>
+
+            <label>
+              Last Name
+              <input id="lname" name="lname" type="text">
+            </label>
+
+            <label>
+              Street
+              <input id="street" name="street" type="text">
+            </label>
+
+            <label>
+              City
+              <input id="city" name="city" type="text">
+            </label>
+
+            <label>
+              State
+              <input id="state" name="state" type="text">
+            </label>
+
+            <label>
+              Zip
+              <input id="zip" name="zip" type="number">
+            </label>
+
+          </fieldset>
+
+          <fieldset class = "payment">
+            <legend>Payment</legend>
+
+            <label>
+              Card number
+              <input id="cardNumber" name="cardNumber" type="number">
+            </label>
+
+            <label>
+              Expiration
+              <input id="expiration" name="expiration" type="text">
+            </label>
+
+            <label>
+              Security Code
+              <input id="code" name="code" type="number" maxlength="3">
+            </label>
+          </fieldset>
+
+          
+            <fieldset class = "orderSummary">
+              <legend>Order Summary</legend>
+
+              <aside class = "panel">
+                <p class = "totalSubHeader">Item Subtotal <span class = "totalPrice"></span></p>
+                <p>Shipping Estimate</p>
+                <p>Tax</p>
+                <h2>Order Total</h2>
+              </aside>
+            </fieldset>
+            <button class = "checkoutSubmit" type="submit"> Animate this button please</button>
+
+        </form>
       </section>
     </main>
 

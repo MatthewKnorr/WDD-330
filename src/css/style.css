@@ -469,6 +469,27 @@ button {
   font-size: 20px;
   font-weight: bolder;
 }
+
+/* Checkout Form Styles */
+.products > h2{
+  text-align:center;
+}
+
+
+#checkoutForm *{
+  display:grid;
+  grid-template-columns:1;
+  width:50vw;
+  margin: 0 auto;
+}
+#checkoutForm > fieldset > legend{
+  /*Okay We need to come back here sometime okay guys cuz if we dont il probably explode */
+}
+
+
+
+
+
 @keyframes cartPop {
   0% {
     transform: scale(1);

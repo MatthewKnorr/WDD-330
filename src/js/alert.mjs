@@ -1,4 +1,4 @@
-import { getJson } from './productData.mjs';
+import { getJson } from './externalServices.mjs';
 
 export async function displayAlerts() {
     const alerts = await getJson('alerts');
