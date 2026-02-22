@@ -147,34 +147,29 @@
     })
   }
 
-  export async function productList(selector, category){
+  export async function productList(selector, category) {
     const el = document.querySelector(selector);
+    if (!el) return;
+
     const products = await getProductsByCategory(category);
 
     renderListWithTemplate(productCard, el, products);
     createControls(el, products);
-    console.log(products);
 
-    // Rendering
-    renderListWithTemplate(productCard, el, products);
-
-    // Set up buttons
-    const buttons = document.querySelectorAll('.quick-view');
-    buttons.forEach(button => {
-      button.addEventListener('click', async () => {
+    document.querySelectorAll(".quick-view").forEach((button) => {
+      button.addEventListener("click", async (event) => {
         event.preventDefault();
         const product = await findProductById(button.id);
         renderModal(product);
-      })
-    })
-
-    /*
-    console.log(products);
-    products.forEach(tent => {
-      const card = productCard(tent);
-      cardList += card;
+      });
     });
-    selector.insertAdjacentHTML("beforeend", cardList);
-    */
   }
 
+  /*
+  console.log(products);
+  products.forEach(tent => {
+    const card = productCard(tent);
+    cardList += card;
+  });
+  selector.insertAdjacentHTML("beforeend", cardList);
+  */
