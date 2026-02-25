@@ -546,7 +546,9 @@ button {
   filter: brightness(1.1);
 }
 
-
+#successMainEl {
+  text-align: center;
+}
 
 @keyframes cartPop {
   0% {

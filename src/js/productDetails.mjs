@@ -45,6 +45,7 @@ async function addToCartHandler(e) {
   const product = await findProductById(e.currentTarget.dataset.id);
   console.log(product);
   addProductToCart(product);
+  alert(`${product} successfully added!`);
   // Update Subscript on Cart Addition (DOM reload update already handled).
 }
 
