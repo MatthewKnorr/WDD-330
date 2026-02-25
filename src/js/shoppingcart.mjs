@@ -1,5 +1,4 @@
-import { getData, getLocalStorage } from './utils.mjs';
-import { renderListWithTemplate } from './utils.mjs';
+import { getLocalStorage, renderListWithTemplate } from './utils.mjs';
 
 function cartItemTemplate(item) {
     return `<li class="cart-card">

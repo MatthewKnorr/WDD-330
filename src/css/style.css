@@ -469,6 +469,85 @@ button {
   font-size: 20px;
   font-weight: bolder;
 }
+
+/* Checkout Form Styles */
+.products > h2{
+  text-align:center;
+}
+
+
+#checkoutForm {
+  width: 50vw;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.25rem;
+}
+
+#checkoutForm fieldset {
+  border: 1px solid #999;
+  padding: 1rem;
+  margin: 0;
+}
+
+#checkoutForm legend {
+  font-weight: 600;
+  padding: 0 0.5rem;
+}
+
+#checkoutForm label {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+#checkoutForm input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.4rem;
+}
+
+.orderSummary .panel {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.orderSummary .panel p,
+.orderSummary .panel h2 {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  margin: 0;
+}
+
+.orderSummary .panel span {
+  grid-column: 2;
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.orderSummary .totalSubHeader {
+  font-weight: 600;
+}
+
+.orderSummary h2 {
+  font-weight: 700;
+}
+
+.checkoutSubmit {
+  width: 100%;
+  padding: 0.75rem;
+  background: #4b531b;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.checkoutSubmit:hover {
+  filter: brightness(1.1);
+}
+
+
+
 @keyframes cartPop {
   0% {
     transform: scale(1);

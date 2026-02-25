@@ -1,4 +1,4 @@
-  import { getData, findProductById } from './productData.mjs';
+  import { getProductsByCategory, findProductById } from './externalServices.mjs';
   import { renderListWithTemplate, discountPercent } from './utils.mjs';
   import { addProductToCart } from './productDetails.mjs';
 
@@ -29,15 +29,15 @@
     const sorted = [...products];
 
     switch(criteria){
-      case "price-low":
+      case 'price-low':
         sorted.sort((a,b) => a.FinalPrice - b.FinalPrice);
         break;
 
-      case "price-high":
+      case 'price-high':
         sorted.sort((a,b) => b.FinalPrice - a.FinalPrice);
         break;
 
-      case "discount":
+      case 'discount':
         sorted.sort((a,b) => {
           const discountA = (a.SuggestedRetailPrice - a.FinalPrice) / a.SuggestedRetailPrice;
           const discountB = (b.SuggestedRetailPrice - b.FinalPrice) / b.SuggestedRetailPrice;
@@ -45,19 +45,19 @@
         });
         break;
 
-      case "name-asc":
+      case 'name-asc':
         sorted.sort((a,b) =>
           a.NameWithoutBrand.localeCompare(b.NameWithoutBrand)
         );
         break;
 
-      case "name-desc":
+      case 'name-desc':
         sorted.sort((a,b) =>
           b.NameWithoutBrand.localeCompare(a.NameWithoutBrand)
         );
         break;
 
-      case "brand":
+      case 'brand':
         sorted.sort((a,b) =>
           a.Brand.Name.localeCompare(b.Brand.Name)
         );
@@ -77,8 +77,8 @@
   }
 
   function createControls(container, products){
-    const controlsDiv = document.createElement("div");
-    controlsDiv.classList.add("controls");
+    const controlsDiv = document.createElement('div');
+    controlsDiv.classList.add('controls');
 
     controlsDiv.innerHTML = `
       <input type="text" id="search-input" placeholder="Search products..." />
@@ -96,19 +96,19 @@
 
     container.parentElement.insertBefore(controlsDiv, container);
 
-    const searchInput = controlsDiv.querySelector("#search-input");
-    const sortSelect = controlsDiv.querySelector("#sort-select");
+    const searchInput = controlsDiv.querySelector('#search-input');
+    const sortSelect = controlsDiv.querySelector('#sort-select');
 
     function updateDisplay(){
       let filtered = filterProducts(products, searchInput.value);
       let sorted = sortProducts(filtered, sortSelect.value);
 
-      container.innerHTML = "";
+      container.innerHTML = '';
       renderListWithTemplate(productCard, container, sorted);
     }
 
-    searchInput.addEventListener("input", updateDisplay);
-    sortSelect.addEventListener("change", updateDisplay);
+    searchInput.addEventListener('input', updateDisplay);
+    sortSelect.addEventListener('change', updateDisplay);
   }
   function productModal(product) {
     return `
@@ -155,34 +155,29 @@
     })
   }
 
-  export async function productList(selector, category){
+  export async function productList(selector, category) {
     const el = document.querySelector(selector);
-    const products = await getData(category);
+    if (!el) return;
+
+    const products = await getProductsByCategory(category);
 
     renderListWithTemplate(productCard, el, products);
     createControls(el, products);
-    console.log(products);
 
-    // Rendering
-    renderListWithTemplate(productCard, el, products);
-
-    // Set up buttons
-    const buttons = document.querySelectorAll('.quick-view');
-    buttons.forEach(button => {
-      button.addEventListener('click', async () => {
+    document.querySelectorAll(".quick-view").forEach((button) => {
+      button.addEventListener("click", async (event) => {
         event.preventDefault();
         const product = await findProductById(button.id);
         renderModal(product);
-      })
-    })
-
-    /*
-    console.log(products);
-    products.forEach(tent => {
-      const card = productCard(tent);
-      cardList += card;
+      });
     });
-    selector.insertAdjacentHTML("beforeend", cardList);
-    */
   }
 
+  /*
+  console.log(products);
+  products.forEach(tent => {
+    const card = productCard(tent);
+    cardList += card;
+  });
+  selector.insertAdjacentHTML("beforeend", cardList);
+  */

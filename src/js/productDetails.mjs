@@ -1,7 +1,7 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
-import { findProductById } from "./productData.mjs";
-import { renderCartSubscript } from "./cartBadge.mjs";
-import { discountPercent } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from './utils.mjs';
+import { findProductById } from './externalServices.mjs';
+import { renderCartSubscript } from './cartBadge.mjs';
+import { discountPercent } from './utils.mjs';
 
 export default async function productDetails(productId) {
   // Retrieve product details based on the ID in the URL
@@ -9,19 +9,19 @@ export default async function productDetails(productId) {
 
   // Handle cases where the product does not exist
    if (!product) {
-    document.querySelector(".product-detail").innerHTML =
-      "<strong>Looks like this product packed up and left camp.<br>Please head back and choose from our available inventory.</strong>";
+    document.querySelector('.product-detail').innerHTML =
+      '<strong>Looks like this product packed up and left camp.<br>Please head back and choose from our available inventory.</strong>';
 
     // Hide Add to Cart button when no valid product exists
-    const btn = document.getElementById("addToCart");
-    if (btn) btn.style.display = "none";
+    const btn = document.getElementById('addToCart');
+    if (btn) btn.style.display = 'none';
     // Stop execution to prevent UI errors
     return; 
   }
 
   // Render product details and enable add-to-cart functionality
   renderProductDetails(product);
-  document.getElementById("addToCart").addEventListener("click", addToCartHandler);
+  document.getElementById('addToCart').addEventListener('click', addToCartHandler);
 
 }
 
@@ -41,7 +41,7 @@ function renderProductDetails(product) {
 }
 
 async function addToCartHandler(e) {
-  console.log("Adding product to cart...");
+  console.log('Adding product to cart...');
   const product = await findProductById(e.currentTarget.dataset.id);
   console.log(product);
   addProductToCart(product);
@@ -51,9 +51,9 @@ async function addToCartHandler(e) {
 export function addProductToCart(product) {
   const cart = getLocalStorage("so-cart") || []; // ✅ now defined
   cart.push(product);
-  setLocalStorage("so-cart", cart);
+  setLocalStorage('so-cart', cart);
   renderCartSubscript();
-  const cartObj = document.querySelector(".cart");
+  const cartObj = document.querySelector('.cart');
   // Resets Cart Animation Class.
   cartObj.classList.remove('cart-animation');
   // Forces animation reset.

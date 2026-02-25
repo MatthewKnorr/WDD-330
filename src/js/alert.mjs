@@ -1,3 +1,4 @@
+import { getJson } from './externalServices.mjs';
 import { getJson } from './productData.mjs';
 import { getLocalStorage, setLocalStorage } from './utils.mjs';
 
