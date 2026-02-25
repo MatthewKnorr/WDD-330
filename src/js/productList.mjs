@@ -1,5 +1,6 @@
   import { getProductsByCategory, findProductById } from './externalServices.mjs';
   import { renderListWithTemplate, discountPercent } from './utils.mjs';
+  import { addProductToCart } from './productDetails.mjs';
 
   function productCard(product){
     return `<li class="product-card">
@@ -138,11 +139,18 @@
   function renderModal(product) {
     const mainEl = document.querySelector('main');
     mainEl.insertAdjacentHTML('beforeend', productModal(product));
-    const dialog = document.querySelector('dialog');
+    const dialog = document.querySelector('dialog:last-of-type');
     dialog.showModal();
 
     const close = document.querySelector('.closeModal');
     close.addEventListener('click', () => {
+      dialog.close();
+    })
+
+    const addBtn = dialog.querySelector('#addToCart');
+    addBtn.addEventListener('click', async(e) => {
+      const product = await findProductById(e.currentTarget.dataset.id);
+      addProductToCart(product);
       dialog.close();
     })
   }

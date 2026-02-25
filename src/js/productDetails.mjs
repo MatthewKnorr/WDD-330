@@ -48,8 +48,8 @@ async function addToCartHandler(e) {
   // Update Subscript on Cart Addition (DOM reload update already handled).
 }
 
-function addProductToCart(product) {
-  const cart = getLocalStorage('so-cart') || []; // ✅ now defined
+export function addProductToCart(product) {
+  const cart = getLocalStorage("so-cart") || []; // ✅ now defined
   cart.push(product);
   setLocalStorage('so-cart', cart);
   renderCartSubscript();
