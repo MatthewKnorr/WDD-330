@@ -550,6 +550,40 @@ button {
   text-align: center;
 }
 
+#main-footer{
+  text-align:center;
+}
+#main-footer h1{
+  font: var(--font-headline);
+  font-size:30px;
+  font-weight:bolder;
+}
+
+.newsletter-email{
+  font-size:30px;
+}
+.newsletter-form label{
+  font-size:20px;
+}
+.newsletter-form input {
+  font-size: 1.25rem;
+  margin-bottom:10px;
+}
+
+.newsletter-form{
+  font-size:20px;
+}
+
+.newsletter-form button:hover{
+  background-color:grey;
+  transform: translateY(-2px);
+
+}
+#all-product-div div:hover{
+  transform:translateY(-2px);
+  background-color:rgba(128, 128, 128, 0.177);
+}
+
 @keyframes cartPop {
   0% {
     transform: scale(1);
