@@ -28,14 +28,34 @@ export default async function productDetails(productId) {
 function renderProductDetails(product) {
     document.querySelector('#productName').innerText = product.Brand.Name;
     document.querySelector('#productNameWithoutBrand').innerText = product.NameWithoutBrand;
-    document.querySelector('#productImage').src = product.Images.PrimaryLarge;
-    document.querySelector('#productImage').alt = product.Name;
+    
+    const imageEl = document.querySelector('#productImage');
+    imageEl.src = product.Images.PrimaryLarge;
+    imageEl.alt = product.Name;
 
     document.querySelector('#productPrice').innerHTML = `
     <span class = "strikethrough">$${product.SuggestedRetailPrice}</span> $${product.FinalPrice}
     <span class = "percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!`;
 
-    document.querySelector('#productColor').innerText = product.Colors[0].ColorName;
+    const colorEl = document.querySelector('#colorSwatchList');
+    product.Colors.forEach(color => {
+          colorEl.innerHTML += `<li id=${color.ColorCode} class="colorSelector"><img src="${color.ColorChipImageSrc}" class="colorSwatch"/> ${color.ColorName}</li>`;
+          console.log(color);
+    });
+    
+    const originalColorCode = document.querySelector('.colorSelector').id;
+    const originalColor = product.Colors.find(c => c.ColorCode === originalColorCode);
+    document.querySelector('#addToCart').dataset.color = JSON.stringify(originalColor);
+    const colorOptions = document.querySelectorAll('.colorSelector');
+    colorOptions.forEach(option => { //resets the main image to be the one selected
+        option.addEventListener('click', () => {
+          const colorCode = option.id;
+          const color = product.Colors.find(color => color.ColorCode === colorCode);
+          imageEl.src = color.ColorPreviewImageSrc;
+          document.querySelector('#addToCart').dataset.color = JSON.stringify(color);
+        })
+    })
+
     document.querySelector('#productDescription').innerHTML = product.DescriptionHtmlSimple;
     document.querySelector('#addToCart').dataset.id = product.Id;
 }
@@ -43,15 +63,27 @@ function renderProductDetails(product) {
 async function addToCartHandler(e) {
   console.log('Adding product to cart...');
   const product = await findProductById(e.currentTarget.dataset.id);
-  console.log(product);
-  addProductToCart(product);
+  const addToCartButton = document.querySelector('#addToCart');
+  const color = JSON.parse(addToCartButton.dataset.color);
+  addProductToCart(product, color);
   alert(`${product.NameWithoutBrand} successfully added!`);
   // Update Subscript on Cart Addition (DOM reload update already handled).
 }
 
-export function addProductToCart(product) {
+export function addProductToCart(product, color) {
   const cart = getLocalStorage("so-cart") || []; // ✅ now defined
-  cart.push(product);
+  const cartItem = {
+    Id: product.Id,
+    Name: product.NameWithoutBrand,
+    Brand: product.Brand.Name,
+    FinalPrice: product.FinalPrice,
+    SuggestedRetailPrice: product.SuggestedRetailPrice,
+    Image: color.ColorPreviewImageSrc || product.Images.PrimaryLarge,
+    ColorName: color.ColorName,
+    ColorCode: color.ColorCode,
+    quantity: 1
+  };
+  cart.push(cartItem);
   setLocalStorage('so-cart', cart);
   renderCartSubscript();
   const cartObj = document.querySelector('.cart');

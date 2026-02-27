@@ -1,14 +1,16 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 import { renderCartSubscript } from "./cartBadge.mjs";
+import { loadHeaderFooter } from "./utils.mjs"; 
 
 function normalizeCart(cart) {
   const map = {};
 
   cart.forEach((item) => {
-    if (!map[item.Id]) {
-      map[item.Id] = { ...item, quantity: item.quantity || 1 };
+    const key = `${item.Id}-${item.ColorCode}`;
+    if (!map[key]) {
+      map[key] = { ...item, quantity: item.quantity || 1 };
     } else {
-      map[item.Id].quantity += item.quantity || 1;
+      map[key].quantity += item.quantity || 1;
     }
   });
 
@@ -30,14 +32,14 @@ function cartItemTemplate(item) {
   const originalTotal = (item.SuggestedRetailPrice * qty).toFixed(2);
   const discountedTotal = (item.FinalPrice * qty).toFixed(2);
 
-  return `<li class="cart-card divider" data-id="${item.Id}">
+  return `<li class="cart-card divider" data-id="${item.Id}" data-color="${item.ColorCode}">
     <a href="#" class="cart-card__image">
-      <img src="${item.Images?.PrimaryLarge || item.Image}" alt="${item.Name}" />
+      <img src="${item.Image}" alt="${item.Name}" />
     </a>
     <a href="#"><h2 class="card__name">${item.Name}</h2></a>
-    <p class="cart-card__color">${item.Colors?.[0]?.ColorName || ""}</p>
+    <p class="cart-card__color">${item.ColorName || ""}</p>
     <div class="cart-card__quantity">
-      <input type="number" min="1" value="${qty}" data-id="${item.Id}" />
+      <input type="number" min="1" value="${qty}" data-id="${item.Id}" data-color="${item.ColorCode}"/>
     </div>
     <div class="cart-card__price">
       <span class="strikethrough">$${originalTotal}</span>
@@ -105,8 +107,8 @@ function renderTotal() {
   htmlTotal.textContent = `Total: $${total.toFixed(2)}`;
 }
 
-function handleRemovingItemById(id) {
-  const cartItems = getCart().filter((item) => item.Id !== id);
+function handleRemovingItemById(id, colorCode) {
+  const cartItems = getCart().filter((item) => !(item.Id === id && item.ColorCode === colorCode));
   setLocalStorage("so-cart", cartItems);
   renderCartContents();
   renderTotal();
@@ -117,15 +119,16 @@ function handleQuantityChange(e) {
   if (!e.target.matches(".cart-card__quantity input")) return;
 
   const id = e.target.dataset.id;
+  const colorCode = e.target.dataset.color;
   let qty = parseInt(e.target.value, 10);
 
   if (isNaN(qty) || qty < 1) {
-    handleRemovingItemById(id);
+    handleRemovingItemById(id, colorCode);
     return;
   }
 
   const cartItems = getCart();
-  const item = cartItems.find((i) => i.Id === id);
+  const item = cartItems.find((i) => i.Id === id && i.ColorCode === colorCode);
   if (!item) return;
 
   item.quantity = qty;
@@ -147,9 +150,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cartContainer.addEventListener("click", (e) => {
     if (e.target.matches("span[data-id]")) {
-      handleRemovingItemById(e.target.dataset.id);
+      const li = e.target.closest(".cart-card");
+      handleRemovingItemById(li.dataset.id, li.dataset.color);
     }
   });
 
   cartContainer.addEventListener("change", handleQuantityChange);
 });
+
+loadHeaderFooter();
