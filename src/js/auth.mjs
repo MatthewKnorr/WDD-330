@@ -5,46 +5,44 @@ import { jwtDecode } from "jwt-decode";
 const tokenKey = "so-token";
 
 export async function login(creds, redirect = "/") {
-    try {
-        const token = await loginRequest(creds);
-        setLocalStorage(tokenKey, token);
-        // because of the default arg provided above...if no redirect is provided send them Home.
-        window.location = redirect;
-    } catch (err) {
-        alert(err.message.message);
-    }
+  try {
+    const token = await loginRequest(creds);
+    setLocalStorage(tokenKey, token);
+
+    window.location = redirect || "/";
+  } catch (err) {
+    alert("Invalid email or password");
+  }
 }
 
-function istokenValid(token){
-  if (!token){
+function istokenValid(token) {
+  if (!token) {
     return false;
   }
-  
-  const decoded = jwtDecode(token); //?
 
-  const date = new Date();
+  const decoded = jwtDecode(token);
+  const now = Date.now();
 
-  if (decoded.exp *1000 < date.getTime()){
-    console.log('expired');
+  if (decoded.exp * 1000 < now) {
+    console.log("Token expired");
     return false;
   }
-  return true; // okay, nice
 
+  return true;
 }
 
-function checkLogin(){
+export function checkLogin() {
   const token = getLocalStorage(tokenKey);
 
-  const isValid = istokenValid(token);
+  const valid = istokenValid(token);
 
-  if(!isValid){
+  if (!valid) {
     localStorage.removeItem(tokenKey);
-    // D:
 
-    const location = window.location;
-    window.location = `/login/index.html?redirect=${location.pathname}`;
-    // D:
+    const location = window.location.pathname;
+
+    window.location = `/login/index.html?redirect=${location}`;
   }
-  return token
-}
 
+  return token;
+}

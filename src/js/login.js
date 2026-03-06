@@ -3,14 +3,15 @@ import { login } from "./auth.mjs";
 
 loadHeaderFooter();
 
-const param = getParam('redirect');
+const redirect = getParam("redirect") || "/";
 
 const button = document.getElementById("loginButton");
 
-button.addEventListener("click", (e)=>{
+button.addEventListener("click", (e) => {
+  e.preventDefault();
 
-  const username = document.querySelector('#username').value
-  const password = document.querySelector('#password').value
-  login({username, password }, param);
-}
-)
+  const email = document.querySelector("#username").value;
+  const password = document.querySelector("#password").value;
+
+  login({ email, password }, redirect);
+});
