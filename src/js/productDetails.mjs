@@ -58,6 +58,32 @@ function renderProductDetails(product) {
 
     document.querySelector('#productDescription').innerHTML = product.DescriptionHtmlSimple;
     document.querySelector('#addToCart').dataset.id = product.Id;
+
+    const commentEl = document.querySelector('.allComments');
+    const comments = getComments(product.Id);
+    comments.forEach(c => {
+      commentEl.innerHTML += commentsDiv(c);
+    })
+
+    const commentNameEl = document.querySelector('#commentName');
+    const commentInputEl = document.querySelector('#addComment');
+    const submitComment = document.querySelector('#submitComment');
+
+    submitComment.addEventListener('click', (e) => {
+      e.preventDefault();
+      const nameToAdd = commentNameEl.value || "Anonymous";
+      const commentToAdd = commentInputEl.value;
+      if (!commentToAdd.trim()) return;
+      saveComments(product.Id, {name: nameToAdd, comment: commentToAdd});
+      
+      commentEl.innerHTML = '';
+      const comments = getComments(product.Id);
+      comments.forEach(c => {
+        commentEl.innerHTML += commentsDiv(c);
+      })
+      commentNameEl.value = "";
+      commentInputEl.value = "";
+    })
 }
 
 async function addToCartHandler(e) {
@@ -93,4 +119,32 @@ export function addProductToCart(product, color) {
   void cartObj.offsetWidth;
   // Re-instates Cart Animation Class.
   cartObj.classList.add('cart-animation');
+}
+
+function saveComments(product, comment) {
+  const item = localStorage.getItem("comments");
+  const comments = item ? JSON.parse(item) : {};
+
+  if (!comments[product]) {
+    comments[product] = [];
+  }
+
+  comments[product].push(comment);
+
+  setLocalStorage("comments", comments);
+}
+
+function getComments(product) {
+  const item = localStorage.getItem("comments");
+  const comments = item ? JSON.parse(item) : {};
+  return comments[product] || [];
+}
+
+function commentsDiv(c) {
+  return `
+    <div class="commentMade">
+      <p>${c.name}:</p>
+      <p>- ${c.comment}</p>
+    </div>
+  `;
 }
