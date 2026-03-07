@@ -607,6 +607,37 @@ a.checkout {
   text-decoration: none;
 }
 
+.product-comments h2 {
+  text-align: center;
+  border-top: 2px solid var(--primary-color);
+}
+
+.product-comments form {
+  display: flex;
+  flex-direction: column;
+  width: 75vw;
+  margin: 0 auto;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding: 15px;
+  line-height: 30px;
+}
+
+#submitComment {
+  width: 25vw;
+  margin: 5px auto;
+  background-color: var(--secondary-color);
+  color: white;
+  display: block;
+  border: 0;
+  font-size: var(--medium-font);
+  cursor: pointer;
+}
+
+.allComments {
+  margin: 1em;
+}
+
 @keyframes cartPop {
   0% {
     transform: scale(1);
