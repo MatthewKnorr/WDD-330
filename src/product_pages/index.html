@@ -23,11 +23,18 @@
 
         <h2 class="divider" id="productNameWithoutBrand"></h2>
 
-        <img class="divider" src="" alt="" id="productImage" />
+        <div class="product-image-carousel divider">
+          <img class="divider" src="" alt="" id="productImage" />
+
+          <div id="imageThumbnailList" class="image-thumbnails"></div>
+        </div>
 
         <p class="product-card__price" id="productPrice"></p>
 
-        <p class="product__color" id="productColor">Colors: <ul id="colorSwatchList"></ul></p>
+        <div class="product__color">
+          <p>Colors:</p>
+          <ul id="colorSwatchList"></ul>
+        </div>
 
         <p class="product__description" id="productDescription"></p>
 
@@ -48,6 +55,13 @@
 
         </div>
       </section>
+
+      <section class="recommended-products">
+        <h3>Other Gear to Consider</h3>
+        <div id="recommendedProducts" class="recommended-products__grid"></div>
+      </section>
+
+
     </main>
     <footer></footer>
   </body>
