@@ -650,31 +650,42 @@ a.checkout {
   padding: 2rem;
   font-size: 1.1rem;
 }
+
 .header-icons {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 22px;
 }
 
-.wishlist {
-  padding-top: 1em;
-  text-align: center;
+.account,
+.wishlist,
+.cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.wishlist svg {
+.header-icons svg {
   width: 26px;
   height: 26px;
   fill: none;
   stroke: var(--dark-grey);
   stroke-width: 2;
-  transition:
-    transform 0.15s ease,
-    stroke 0.15s ease;
+  cursor: pointer;
+  transition: transform 0.15s ease, stroke 0.15s ease, fill 0.15s ease;
 }
 
-.wishlist:hover svg {
-  stroke: #d33;
+.header-icons a:hover svg {
   transform: scale(1.15);
+  stroke: #4c8bf5;
+}
+
+.wishlist a:hover svg {
+  stroke: #d33;
+}
+
+.cart:hover svg {
+  fill: black; 
 }
 .product-comments h2 {
   text-align: center;
@@ -791,7 +802,7 @@ a.checkout {
   }
   .cart-card {
     font-size: inherit;
-    /* grid-template-columns: 150px auto 15%; */
+  
   }
 }
 
