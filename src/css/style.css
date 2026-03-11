@@ -117,23 +117,7 @@ button {
 .divider {
   border-bottom: 2px solid var(--primary-color);
 }
-/* End utility classes */
 
-/* Cart icon styles */
-.cart {
-  padding-top: 1em;
-  position: relative;
-  text-align: center;
-}
-
-.cart svg {
-  width: 25px;
-}
-.cart:hover svg {
-  fill: gray;
-}
-
-/* End cart icon styles */
 
 .mission {
   padding: 0 0.5em;
@@ -253,10 +237,6 @@ button {
   display: none;
 }
 
-.cart {
-  position: relative;
-  right: 0;
-}
 
 .cart-card.divider {
   width: 90%;
@@ -650,31 +630,107 @@ a.checkout {
   padding: 2rem;
   font-size: 1.1rem;
 }
+
 .header-icons {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 22px;
 }
 
-.wishlist {
-  padding-top: 1em;
-  text-align: center;
+.account,
+.wishlist,
+.cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
+.account svg,
 .wishlist svg {
   width: 26px;
   height: 26px;
   fill: none;
   stroke: var(--dark-grey);
   stroke-width: 2;
-  transition:
-    transform 0.15s ease,
-    stroke 0.15s ease;
+  cursor: pointer;
+  transition: transform 0.15s ease, stroke 0.15s ease, fill 0.15s ease;
 }
 
-.wishlist:hover svg {
-  stroke: #d33;
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.account,
+.wishlist,
+.cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.account svg,
+.wishlist svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: var(--dark-grey);
+  stroke-width: 2;
+  cursor: pointer;
+  transition: transform 0.15s ease, stroke 0.15s ease, fill 0.15s ease;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.account,
+.wishlist,
+.cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.account svg,
+.wishlist svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: var(--dark-grey);
+  stroke-width: 2;
+  cursor: pointer;
+  transition: transform 0.15s ease, stroke 0.15s ease, fill 0.15s ease;
+}
+
+.cart svg {
+  width: 26px;
+  height: 26px;
+  fill: black;
+  stroke: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, fill 0.15s ease;
+}
+
+.account a:hover svg {
   transform: scale(1.15);
+  stroke: #4c8bf5;
+}
+
+.wishlist a:hover svg {
+  transform: scale(1.15);
+  stroke: #d33;
+}
+
+.cart a:hover svg {
+  transform: scale(1.15);
+  fill: gray;
 }
 .product-comments h2 {
   text-align: center;
@@ -791,7 +847,7 @@ a.checkout {
   }
   .cart-card {
     font-size: inherit;
-    /* grid-template-columns: 150px auto 15%; */
+  
   }
 }
 
