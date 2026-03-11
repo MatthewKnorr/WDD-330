@@ -19,93 +19,100 @@
       <section class="products">
         <h2>Review & Place your Order</h2>
 
-        <form id="checkoutForm" class ="formPanel">
-          <fieldset class ="group">
+        <form id="checkoutForm" class="formPanel">
+          <fieldset class="group">
             <legend>Shipping</legend>
 
-              <label>
-                First name
-                <input id="fname" name="fname" type="text" required>
-              </label>
+            <label>
+              First name
+              <input id="fname" name="fname" type="text" required />
+            </label>
 
-              <label>
-                Last Name
-                <input id="lname" name="lname" type="text" required>
-              </label>
+            <label>
+              Last Name
+              <input id="lname" name="lname" type="text" required />
+            </label>
 
-              <label>
-                Street
-                <input id="street" name="street" type="text" required>
-              </label>
+            <label>
+              Street
+              <input id="street" name="street" type="text" required />
+            </label>
 
-              <label>
-                City
-                <input id="city" name="city" type="text" required>
-              </label>
+            <label>
+              City
+              <input id="city" name="city" type="text" required />
+            </label>
 
-              <label>
-                State
-                <input id="state" name="state" type="text" required>
-              </label>
+            <label>
+              State
+              <input id="state" name="state" type="text" required />
+            </label>
 
-              <label>
-                Zip
-                <input id="zip" name="zip" type="number" required>
-              </label>
-
+            <label>
+              Zip
+              <input id="zip" name="zip" type="number" required />
+            </label>
           </fieldset>
 
-          <fieldset class = "payment">
+          <fieldset class="payment">
             <legend>Payment</legend>
 
-              <label>
-                Card number
-                <input id="cardNumber" name="cardNumber" type="text" inputmode="numeric" required>
-              </label>
+            <label>
+              Card number
+              <input
+                id="cardNumber"
+                name="cardNumber"
+                type="text"
+                inputmode="numeric"
+                required
+              />
+            </label>
 
-              <label>
-                Expiration
-                <input id="expiration" name="expiration" type="text" required>
-              </label>
+            <label>
+              Expiration
+              <input id="expiration" name="expiration" type="text" required />
+            </label>
 
-              <label>
-                Security Code
-                <input id="code" name="code" type="text" inputmode="numeric" maxlength="3" required>
-              </label>
-
+            <label>
+              Security Code
+              <input
+                id="code"
+                name="code"
+                type="text"
+                inputmode="numeric"
+                maxlength="3"
+                required
+              />
+            </label>
           </fieldset>
 
-          
-<fieldset class="orderSummary">
-  <legend>Order Summary</legend>
+          <fieldset class="orderSummary">
+            <legend>Order Summary</legend>
 
-  <aside class="panel checkout-summary">
-    <p class="totalSubHeader">
-      Item Subtotal <span id="num-items">0</span>
-      <span id="cartTotal">$0.00</span>
-    </p>
+            <aside class="panel checkout-summary">
+              <p class="totalSubHeader">
+                Item Subtotal <span id="num-items">0</span>
+                <span id="cartTotal">$0.00</span>
+              </p>
 
-    <p>
-      Shipping Estimate
-      <span id="shipping">$0.00</span>
-    </p>
+              <p>
+                Shipping Estimate
+                <span id="shipping">$0.00</span>
+              </p>
 
-    <p>
-      Tax
-      <span id="tax">$0.00</span>
-    </p>
+              <p>
+                Tax
+                <span id="tax">$0.00</span>
+              </p>
 
-    <h2>
-      Order Total
-      <span id="orderTotal">$0.00</span>
-    </h2>
-  </aside>
-</fieldset>
+              <h2>
+                Order Total
+                <span id="orderTotal">$0.00</span>
+              </h2>
+            </aside>
+          </fieldset>
 
-<button class="checkoutSubmit" type="submit">
-  Checkout
-</button>
-
+          <button class="checkoutSubmit" type="submit">Checkout</button>
         </form>
       </section>
     </main>

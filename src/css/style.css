@@ -211,7 +211,7 @@ button {
   grid-column: 1;
   padding: 15px;
 }
-.cart-card__image img{
+.cart-card__image img {
   border-radius: 5px;
 }
 .cart-card p {
@@ -239,7 +239,6 @@ button {
 }
 
 .cart-card span {
- 
   grid-column: 4;
   display: flex;
   align-items: center;
@@ -324,7 +323,6 @@ button {
   transition: background 0.2s ease;
 }
 
-
 .qty-value {
   min-width: 20px;
   text-align: center;
@@ -338,7 +336,9 @@ button {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .cart-card__quantity input:focus {
@@ -346,8 +346,6 @@ button {
   border-color: #4c8bf5;
   box-shadow: 0 0 0 2px rgba(76, 139, 245, 0.2);
 }
-
-
 
 /* Search & Sort */
 .controls {
@@ -409,12 +407,11 @@ button {
   opacity: 0.8;
 }
 
-
 /* Backpack */
 .subscript {
   position: absolute;
-  top: -10px;
-  right: 30px;
+  top: -14px;
+  right: -8px;
   width: 22px;
   height: 22px;
   text-align: center;
@@ -471,10 +468,9 @@ button {
 }
 
 /* Checkout Form Styles */
-.products > h2{
-  text-align:center;
+.products > h2 {
+  text-align: center;
 }
-
 
 #checkoutForm {
   width: 50vw;
@@ -550,38 +546,37 @@ button {
   text-align: center;
 }
 
-#main-footer{
-  text-align:center;
+#main-footer {
+  text-align: center;
 }
-#main-footer h1{
+#main-footer h1 {
   font: var(--font-headline);
-  font-size:30px;
-  font-weight:bolder;
+  font-size: 30px;
+  font-weight: bolder;
 }
 
-.newsletter-email{
-  font-size:30px;
+.newsletter-email {
+  font-size: 30px;
 }
-.newsletter-form label{
-  font-size:20px;
+.newsletter-form label {
+  font-size: 20px;
 }
 .newsletter-form input {
   font-size: 1.25rem;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
 
-.newsletter-form{
-  font-size:20px;
+.newsletter-form {
+  font-size: 20px;
 }
 
-.newsletter-form button:hover{
-  background-color:grey;
+.newsletter-form button:hover {
+  background-color: grey;
   transform: translateY(-2px);
-
 }
-#all-product-div div:hover{
-  transform:translateY(-2px);
-  background-color:rgba(128, 128, 128, 0.177);
+#all-product-div div:hover {
+  transform: translateY(-2px);
+  background-color: rgba(128, 128, 128, 0.177);
 }
 
 #colorSwatchList {
@@ -605,6 +600,81 @@ a.checkout {
   text-align: center;
   color: darkgreen;
   text-decoration: none;
+}
+
+/* Wishlist Styles */
+.wishlist-page {
+  padding: 1rem;
+}
+
+.wishlist-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wishlist-list .cart-card {
+  grid-template-columns: 150px 1fr 110px;
+}
+
+.wishlist-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  grid-column: 1 / -1;
+  margin-top: 10px;
+}
+
+.wishlist-actions button {
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  background: var(--secondary-color);
+  color: white;
+  border-radius: 6px;
+}
+
+.wishlist-actions button:hover {
+  filter: brightness(1.1);
+}
+
+.wishlist-remove {
+  background: #a94442;
+}
+
+.wishlist-remove:hover {
+  background: #c9302c;
+}
+
+.wishlist-empty {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.wishlist {
+  padding-top: 1em;
+  text-align: center;
+}
+
+.wishlist svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: var(--dark-grey);
+  stroke-width: 2;
+  transition:
+    transform 0.15s ease,
+    stroke 0.15s ease;
+}
+
+.wishlist:hover svg {
+  stroke: #d33;
+  transform: scale(1.15);
 }
 
 @keyframes cartPop {
@@ -644,5 +714,3 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
-
-

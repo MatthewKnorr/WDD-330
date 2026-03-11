@@ -2,76 +2,101 @@ import { getLocalStorage, setLocalStorage } from './utils.mjs';
 import { findProductById } from './externalServices.mjs';
 import { renderCartSubscript } from './cartBadge.mjs';
 import { discountPercent } from './utils.mjs';
+import { addProductToWishlist } from './wishlist.mjs';
 
 export default async function productDetails(productId) {
-  // Retrieve product details based on the ID in the URL
   const product = await findProductById(productId);
 
-  // Handle cases where the product does not exist
-   if (!product) {
+  if (!product) {
     document.querySelector('.product-detail').innerHTML =
       '<strong>Looks like this product packed up and left camp.<br>Please head back and choose from our available inventory.</strong>';
 
-    // Hide Add to Cart button when no valid product exists
     const btn = document.getElementById('addToCart');
     if (btn) btn.style.display = 'none';
-    // Stop execution to prevent UI errors
-    return; 
+
+    const wishlistBtn = document.getElementById('addToWishlist');
+    if (wishlistBtn) wishlistBtn.style.display = 'none';
+
+    return;
   }
 
-  // Render product details and enable add-to-cart functionality
   renderProductDetails(product);
-  document.getElementById('addToCart').addEventListener('click', addToCartHandler);
 
+  document
+    .getElementById('addToCart')
+    .addEventListener('click', addToCartHandler);
+
+  const wishlistBtn = document.getElementById('addToWishlist');
+
+  if (wishlistBtn) {
+    wishlistBtn.addEventListener('click', () => {
+      const addToCartButton = document.querySelector('#addToCart');
+      const color = JSON.parse(addToCartButton.dataset.color);
+
+      addProductToWishlist(product, color);
+      alert(`${product.NameWithoutBrand} added to wishlist!`);
+    });
+  }
 }
 
 function renderProductDetails(product) {
-    document.querySelector('#productName').innerText = product.Brand.Name;
-    document.querySelector('#productNameWithoutBrand').innerText = product.NameWithoutBrand;
-    
-    const imageEl = document.querySelector('#productImage');
-    imageEl.src = product.Images.PrimaryLarge;
-    imageEl.alt = product.Name;
+  document.querySelector('#productName').innerText = product.Brand.Name;
+  document.querySelector('#productNameWithoutBrand').innerText = product.NameWithoutBrand;
 
-    document.querySelector('#productPrice').innerHTML = `
-    <span class = "strikethrough">$${product.SuggestedRetailPrice}</span> $${product.FinalPrice}
-    <span class = "percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!`;
+  const imageEl = document.querySelector('#productImage');
+  imageEl.src = product.Images.PrimaryLarge;
+  imageEl.alt = product.Name;
 
-    const colorEl = document.querySelector('#colorSwatchList');
-    product.Colors.forEach(color => {
-          colorEl.innerHTML += `<li id=${color.ColorCode} class="colorSelector"><img src="${color.ColorChipImageSrc}" class="colorSwatch"/> ${color.ColorName}</li>`;
-          console.log(color);
+  document.querySelector('#productPrice').innerHTML = `
+    <span class="strikethrough">$${product.SuggestedRetailPrice}</span>
+    $${product.FinalPrice}
+    <span class="percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!</span>
+  `;
+
+  const colorEl = document.querySelector('#colorSwatchList');
+  colorEl.innerHTML = "";
+
+  product.Colors.forEach(color => {
+    colorEl.innerHTML += `
+      <li id="${color.ColorCode}" class="colorSelector">
+        <img src="${color.ColorChipImageSrc}" class="colorSwatch"/>
+        ${color.ColorName}
+      </li>
+    `;
+  });
+
+  const originalColorCode = document.querySelector('.colorSelector').id;
+  const originalColor = product.Colors.find(c => c.ColorCode === originalColorCode);
+
+  document.querySelector('#addToCart').dataset.color = JSON.stringify(originalColor);
+
+  const colorOptions = document.querySelectorAll('.colorSelector');
+  colorOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      const colorCode = option.id;
+      const color = product.Colors.find(color => color.ColorCode === colorCode);
+
+      imageEl.src = color.ColorPreviewImageSrc;
+      document.querySelector('#addToCart').dataset.color = JSON.stringify(color);
     });
-    
-    const originalColorCode = document.querySelector('.colorSelector').id;
-    const originalColor = product.Colors.find(c => c.ColorCode === originalColorCode);
-    document.querySelector('#addToCart').dataset.color = JSON.stringify(originalColor);
-    const colorOptions = document.querySelectorAll('.colorSelector');
-    colorOptions.forEach(option => { //resets the main image to be the one selected
-        option.addEventListener('click', () => {
-          const colorCode = option.id;
-          const color = product.Colors.find(color => color.ColorCode === colorCode);
-          imageEl.src = color.ColorPreviewImageSrc;
-          document.querySelector('#addToCart').dataset.color = JSON.stringify(color);
-        })
-    })
+  });
 
-    document.querySelector('#productDescription').innerHTML = product.DescriptionHtmlSimple;
-    document.querySelector('#addToCart').dataset.id = product.Id;
+  document.querySelector('#productDescription').innerHTML = product.DescriptionHtmlSimple;
+  document.querySelector('#addToCart').dataset.id = product.Id;
 }
 
 async function addToCartHandler(e) {
-  console.log('Adding product to cart...');
   const product = await findProductById(e.currentTarget.dataset.id);
   const addToCartButton = document.querySelector('#addToCart');
   const color = JSON.parse(addToCartButton.dataset.color);
+
   addProductToCart(product, color);
   alert(`${product.NameWithoutBrand} successfully added!`);
-  // Update Subscript on Cart Addition (DOM reload update already handled).
 }
 
 export function addProductToCart(product, color) {
-  const cart = getLocalStorage("so-cart") || []; // ✅ now defined
+  const cart = getLocalStorage("so-cart") || [];
+
   const cartItem = {
     Id: product.Id,
     Name: product.NameWithoutBrand,
@@ -83,14 +108,15 @@ export function addProductToCart(product, color) {
     ColorCode: color.ColorCode,
     quantity: 1
   };
+
   cart.push(cartItem);
   setLocalStorage('so-cart', cart);
   renderCartSubscript();
+
   const cartObj = document.querySelector('.cart');
-  // Resets Cart Animation Class.
-  cartObj.classList.remove('cart-animation');
-  // Forces animation reset.
-  void cartObj.offsetWidth;
-  // Re-instates Cart Animation Class.
-  cartObj.classList.add('cart-animation');
+  if (cartObj) {
+    cartObj.classList.remove('cart-animation');
+    void cartObj.offsetWidth;
+    cartObj.classList.add('cart-animation');
+  }
 }
