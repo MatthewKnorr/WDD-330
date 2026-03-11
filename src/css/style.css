@@ -676,6 +676,91 @@ a.checkout {
   stroke: #d33;
   transform: scale(1.15);
 }
+.product-comments h2 {
+  text-align: center;
+  border-top: 2px solid var(--primary-color);
+}
+
+.product-comments form {
+  display: flex;
+  flex-direction: column;
+  width: 75vw;
+  margin: 0 auto;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding: 15px;
+  line-height: 30px;
+}
+
+#submitComment {
+  width: 25vw;
+  margin: 5px auto;
+  background-color: var(--secondary-color);
+  color: white;
+  display: block;
+  border: 0;
+  font-size: var(--medium-font);
+  cursor: pointer;
+}
+
+.allComments {
+  margin: 1em;
+}
+
+.product-image-carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#productImage {
+  max-width: 100%;
+  display: block;
+}
+
+.image-thumbnails {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.image-thumb {
+  border: 1px solid #ccc;
+  background: white;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.image-thumb img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  display: block;
+}
+
+.image-thumb.active {
+  border: 2px solid black;
+}
+
+
+.recommended-products__grid {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.recommended-card {
+  flex: 1 1 220px;
+  max-width: 260px;
+}
+
+.recommended-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 
 @keyframes cartPop {
   0% {

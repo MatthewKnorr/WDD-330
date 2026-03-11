@@ -1,6 +1,5 @@
   import { getProductsByCategory, findProductById } from './externalServices.mjs';
   import { renderListWithTemplate, discountPercent } from './utils.mjs';
-  import { addProductToCart } from './productDetails.mjs';
 
   function productCard(product){
     return `<li class="product-card">
@@ -125,13 +124,9 @@
             <span class = "percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!
           </p>
 
-          <p class="product__color" id="productColor">${product.Colors[0].ColorName}</p>
+          <p>Open the product to see more about it's color options.</p>
 
           <p class="product__description" id="productDescription">${product.DescriptionHtmlSimple}</p>
-
-          <div class="product-detail__add">
-            <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-          </div>
         </dialog>
     `
   }
@@ -142,16 +137,10 @@
     const dialog = document.querySelector('dialog:last-of-type');
     dialog.showModal();
 
-    const close = document.querySelector('.closeModal');
+    const close = dialog.querySelector('.closeModal');
     close.addEventListener('click', () => {
       dialog.close();
-    })
-
-    const addBtn = dialog.querySelector('#addToCart');
-    addBtn.addEventListener('click', async(e) => {
-      const product = await findProductById(e.currentTarget.dataset.id);
-      addProductToCart(product);
-      dialog.close();
+      dialog.remove();
     })
   }
 

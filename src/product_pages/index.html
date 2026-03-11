@@ -41,12 +41,20 @@
 
         <h2 class="divider" id="productNameWithoutBrand"></h2>
 
-        <img class="divider" src="" alt="" id="productImage" />
+        <div class="product-image-carousel divider">
+          <img class="divider" src="" alt="" id="productImage" />
+
+          <div id="imageThumbnailList" class="image-thumbnails"></div>
+        </div>
 
         <p class="product-card__price" id="productPrice"></p>
 
         <p class="product__color" id="productColor">Colors:</p>
         <ul id="colorSwatchList"></ul>
+        <div class="product__color">
+          <p>Colors:</p>
+          <ul id="colorSwatchList"></ul>
+        </div>
 
         <p class="product__description" id="productDescription"></p>
 
@@ -57,6 +65,26 @@
 
         <a class="wishlist-link" href="../wishlist/index.html">View Wishlist</a>
       </section>
+      <section class="product-comments">
+        <h2>Comments:</h2>
+        <form>
+          <label for="commentName">Name:</label>
+          <input type="text" id="commentName" name="commentName"></input>
+          <label for="addComment">Add Comment:</label>
+          <textarea id="addComment" name="addComment" placeholder="Say something about this product..." required></textarea>
+          <input type="submit" id="submitComment"/>
+        </form>
+        <div class="allComments">
+
+        </div>
+      </section>
+
+      <section class="recommended-products">
+        <h3>Other Gear to Consider</h3>
+        <div id="recommendedProducts" class="recommended-products__grid"></div>
+      </section>
+
+
     </main>
 
     <footer></footer>
