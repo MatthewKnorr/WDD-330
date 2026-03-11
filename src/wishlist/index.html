@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sleep Outside | Wishlist</title>
+
+    <link rel="stylesheet" href="../css/style.css" />
+
+    <style>
+      .wishlist-page {
+        padding: 1rem;
+      }
+
+      .wishlist-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .wishlist-actions {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+        align-items: center;
+        grid-column: 1 / -1;
+        margin-top: 0.75rem;
+      }
+
+      .wishlist-actions button {
+        margin: 0;
+      }
+
+      .wishlist-empty {
+        text-align: center;
+        padding: 2rem 0;
+      }
+    </style>
+
+    <script type="module">
+      import { loadHeaderFooter } from "../js/utils.mjs";
+      import { renderWishlist } from "../js/wishlist.mjs";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await loadHeaderFooter();
+        renderWishlist();
+      });
+    </script>
+  </head>
+
+  <body>
+    <header class="divider"></header>
+
+    <main class="divider wishlist-page">
+      <h2>Your Wishlist</h2>
+      <ul class="wishlist-list"></ul>
+    </main>
+
+    <footer></footer>
+  </body>
+</html>

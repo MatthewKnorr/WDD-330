@@ -1,6 +1,8 @@
 import { getLocalStorage, setLocalStorage, discountPercent } from './utils.mjs';
 import { findProductById, getProductsByCategory } from './externalServices.mjs';
 import { renderCartSubscript } from './cartBadge.mjs';
+import { discountPercent } from './utils.mjs';
+import { addProductToWishlist } from './wishlist.mjs';
 
 export default async function productDetails(productId) {
   const product = await findProductById(productId);
@@ -11,6 +13,33 @@ export default async function productDetails(productId) {
 
     const btn = document.getElementById('addToCart');
     if (btn) btn.style.display = 'none';
+
+    const wishlistBtn = document.getElementById('addToWishlist');
+    if (wishlistBtn) wishlistBtn.style.display = 'none';
+
+    return;
+  }
+
+  renderProductDetails(product);
+
+  document
+    .getElementById('addToCart')
+    .addEventListener('click', addToCartHandler);
+
+  const wishlistBtn = document.getElementById('addToWishlist');
+
+  if (wishlistBtn) {
+    wishlistBtn.addEventListener('click', () => {
+      const addToCartButton = document.querySelector('#addToCart');
+      const color = JSON.parse(addToCartButton.dataset.color);
+
+      addProductToWishlist(product, color);
+      alert(`${product.NameWithoutBrand} added to wishlist!`);
+    });
+  }
+}
+
+function renderProductDetails(product) {
     return;
   }
 
@@ -39,6 +68,41 @@ async function renderProductDetails(product) {
   imageEl.alt = product.Name;
 
   document.querySelector('#productPrice').innerHTML = `
+    <span class="strikethrough">$${product.SuggestedRetailPrice}</span>
+    $${product.FinalPrice}
+    <span class="percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!</span>
+  `;
+
+  const colorEl = document.querySelector('#colorSwatchList');
+  colorEl.innerHTML = "";
+
+  product.Colors.forEach(color => {
+    colorEl.innerHTML += `
+      <li id="${color.ColorCode}" class="colorSelector">
+        <img src="${color.ColorChipImageSrc}" class="colorSwatch"/>
+        ${color.ColorName}
+      </li>
+    `;
+  });
+
+  const originalColorCode = document.querySelector('.colorSelector').id;
+  const originalColor = product.Colors.find(c => c.ColorCode === originalColorCode);
+
+  document.querySelector('#addToCart').dataset.color = JSON.stringify(originalColor);
+
+  const colorOptions = document.querySelectorAll('.colorSelector');
+  colorOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      const colorCode = option.id;
+      const color = product.Colors.find(color => color.ColorCode === colorCode);
+
+      imageEl.src = color.ColorPreviewImageSrc;
+      document.querySelector('#addToCart').dataset.color = JSON.stringify(color);
+    });
+  });
+
+  document.querySelector('#productDescription').innerHTML = product.DescriptionHtmlSimple;
+  document.querySelector('#addToCart').dataset.id = product.Id;
     <span class="strikethrough">$${product.SuggestedRetailPrice}</span> $${product.FinalPrice}
     <span class="percent-off">${discountPercent(product.SuggestedRetailPrice, product.FinalPrice)}% Off!</span>
   `;
@@ -163,6 +227,7 @@ async function addToCartHandler(e) {
 }
 
 export function addProductToCart(product, color) {
+  const cart = getLocalStorage("so-cart") || [];
   const cart = getLocalStorage('so-cart') || [];
 
   const cartItem = {

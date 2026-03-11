@@ -1,6 +1,6 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 import { renderCartSubscript } from "./cartBadge.mjs";
-import { loadHeaderFooter } from "./utils.mjs"; 
+import { loadHeaderFooter } from "./utils.mjs";
 
 function normalizeCart(cart) {
   const map = {};
@@ -108,7 +108,9 @@ function renderTotal() {
 }
 
 function handleRemovingItemById(id, colorCode) {
-  const cartItems = getCart().filter((item) => !(item.Id === id && item.ColorCode === colorCode));
+  const cartItems = getCart().filter(
+    (item) => !(item.Id === id && item.ColorCode === colorCode),
+  );
   setLocalStorage("so-cart", cartItems);
   renderCartContents();
   renderTotal();

@@ -10,8 +10,26 @@
 
     <link rel="stylesheet" href="../css/style.css" />
 
+    <style>
+      .product-detail__add {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .product-detail__add button {
+        margin: 0;
+      }
+
+      .wishlist-link {
+        display: block;
+        margin-top: 1rem;
+        text-align: center;
+      }
+    </style>
+
     <script src="../js/product.js" type="module"></script>
-  
   </head>
 
   <body>
@@ -31,6 +49,8 @@
 
         <p class="product-card__price" id="productPrice"></p>
 
+        <p class="product__color" id="productColor">Colors:</p>
+        <ul id="colorSwatchList"></ul>
         <div class="product__color">
           <p>Colors:</p>
           <ul id="colorSwatchList"></ul>
@@ -40,7 +60,10 @@
 
         <div class="product-detail__add">
           <button id="addToCart" data-id="989CG">Add to Cart</button>
+          <button id="addToWishlist">Add to Wishlist</button>
         </div>
+
+        <a class="wishlist-link" href="../wishlist/index.html">View Wishlist</a>
       </section>
       <section class="product-comments">
         <h2>Comments:</h2>
@@ -63,6 +86,7 @@
 
 
     </main>
+
     <footer></footer>
   </body>
 </html>

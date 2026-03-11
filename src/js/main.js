@@ -11,4 +11,3 @@ loadHeaderFooter().then(() => {
   initBreadcrumb();
   initNewsLetter();
 });
-
